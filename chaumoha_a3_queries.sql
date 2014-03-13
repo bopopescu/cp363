@@ -1,6 +1,7 @@
-/* Bryan Chau & Mohamed Mohamedtaki
-Assignment 3 */
-
+-- --------------------------------
+-- Bryan Chau & Mohamed Mohamedtaki
+-- Assignment 3
+-- --------------------------------
 /* Question 1 */
 SELECT pname 
 FROM catalog 

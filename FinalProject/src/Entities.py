@@ -174,3 +174,19 @@ class Supplier:
         ADDRESS: {}
         """.format(self._sId, self._sName, self._phone, self.getAddress())
         return result
+class User:
+    def __init__(self, username, password, employee):
+        self._username = username
+        self._password = password
+        self._employee = employee
+    def getUserName(self):
+        return self._username
+    def getEmployee(self):
+        return self._employee
+    def __str__(self):
+        result = """USERNAME: {}
+    ID: {}
+    NAME: {}
+    """.format(self._username, self._employee.getId(), self._employee.getName())
+        return result
+    

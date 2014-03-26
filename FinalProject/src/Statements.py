@@ -168,3 +168,35 @@ TABLES['CustomerPurchases'] = (
     "    ON DELETE NO ACTION"
     "    ON UPDATE NO ACTION)"
     "ENGINE = InnoDB")
+TABLES['Logins'] = (
+    "CREATE TABLE IF NOT EXISTS `CarCompany`.`Logins` ("
+    "`eid` INT NOT NULL,"
+    "`username` VARCHAR(8) NOT NULL,"
+    "`password` VARCHAR(8) NOT NULL,"
+    "PRIMARY KEY (`eid`),"
+    "CONSTRAINT `eid6`"
+    "    FOREIGN KEY (`eid`)"
+    "    REFERENCES `CarCompany`.`Employee` (`eid`)"
+    "    ON DELETE CASCADE"
+    "    ON UPDATE NO ACTION)")
+INSERT = {}
+INSERT['Employee'] = (
+    "INSERT INTO `CarCompany`.`Employee`"
+    "    (`eid`, `ename`, `salary`, `date_of_employment`, `date_of_departure`, `is_manager`, `manager_id`)"
+    "    VALUES (%d, %s, %d, %s, %s, %d, %d)")
+INSERT['Expenses'] = (
+    ""
+    "")
+INSERT['UpdateExpenses'] = ()
+INSERT['Cars'] = ()
+INSERT['UpdateCars'] = ()
+INSERT['Suppliers'] = ()
+INSERT['CarSupply'] = ()
+INSERT['WorksWith'] = ()
+INSERT['Customer'] = ()
+INSERT['HasCustomer'] = ()
+INSERT['CustomerPurchases'] = ()
+USER_LOGIN = (
+    "SELECT * FROM `CarCompany`.`Employee` WHERE `eid`=("
+    "    SELECT `eid` FROM `CarCompany`.`Logins` WHERE `username`=%s AND `password`=%s LIMIT 1"
+    ")")

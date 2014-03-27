@@ -3,49 +3,68 @@ Created on 2014-03-25
 
 @author: mo
 '''
-import getpass
-import os
-import DatabaseHelper
+from MainFunctions import *
 
-PROG_HEADER = """Used Car Dealer
-Version 1.0 Created in 2014
-Bryan Chau & Mohamed Mohamedtaki
-CP363 Database I
-"""
+# menus and main
+MANAGER_MENU = ("Manage Cars", "Manage Employees", "Manage Expenses", "Manage Sales", "Profit Summary", "Exit")
+SALES_MENU = (("Add Cars", newCar), ("Make a Sale", newSale), ("Car Detail Search", search), ("Exit", None))
 
-def clear():
-    os.system('cls')
-    return
-def login(cnx):
-    user = None
-    u = ""
-    p = ""
-    go = True
-    while user is None and go:
-        clear()
-        print(PROG_HEADER)
-        u = input("Username: ")
-        p = getpass.getpass("Password: ")
-        user = DatabaseHelper.getAccount(cnx, u, p)
-        if user is None:
-            go = input("Invalid username/password combination. Retry?(Y/N) ").upper() == 'Y'
-    return user
 def main():
     con = DatabaseHelper.connect()
     DatabaseHelper.createTables(con)
     user = login(con)
     if con is not None and user is not None:
-        clear()
-        print(PROG_HEADER)
-        print("Welcome, {}!".format(user.getEmployee().getName()))
         run = True
         while run:
-            #clear()
-            i = input()
-            if i == 'exit':
-                run = False
+            clear()
+            print(PROG_HEADER)
+            print("Welcome, {}!".format(user.getEmployee().getName()))
+            if user.getEmployee().isManager():
+                i = managerSelection()
+                if i == len(MANAGER_MENU):
+                    run = False
+                elif i == 0:
+                    continue
+                else:
+                    print(MANAGER_MENU[i-1])
+                    input("Press enter to return to the main menu")
             else:
-                print(i)
+                i = salesPersonSelection()
+                if i == len(SALES_MENU):
+                    run = False
+                elif i == 0:
+                    continue
+                else:
+                    clear()
+                    SALES_MENU[i-1][1](con, user)
+                    input("Press enter to return to the main menu")
     DatabaseHelper.close(con)
     clear()
+    return
+
+def managerSelection():
+    print("Please choose from the following options:")
+    for j in range(len(MANAGER_MENU)):
+        print("{}) {}".format(j+1, MANAGER_MENU[j]))
+    i = input("Selection(number from above): ")
+    if i.isdigit():
+        i = int(i)
+        if i > len(MANAGER_MENU) or i < 1:
+            i = 0
+    else:
+        i = 0
+    return i
+def salesPersonSelection():
+    print("Please choose from the following options:")
+    for j in range(len(SALES_MENU)):
+        print("{}) {}".format(j+1, SALES_MENU[j][0]))
+    i = input("Selection(number from above): ")
+    if i.isdigit():
+        i = int(i)
+        if i > len(SALES_MENU) or i < 1:
+            i = 0
+    else:
+        i = 0
+    return i
+# run proram
 main()

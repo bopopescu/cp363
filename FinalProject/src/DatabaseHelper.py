@@ -5,7 +5,7 @@ Created on 2014-03-25
 '''
 import mysql.connector
 from mysql.connector import errorcode
-from Statements import *
+import Statements
 from Entities import *
 
 DATABASE_USER = 'cp363'
@@ -17,6 +17,7 @@ ERROR_NO_DB = 'ERROR: DATABASE DOES NOT EXIST'
 MESSAGE_CLOSED = "DATABASE CONNECTION WAS CLOSED"
 MESSAGE_CONNECTED = "CONNECTED TO DATABASE"
 
+# Connection functions
 def close(cnx):
     if cnx is not None:
         cnx.close()
@@ -39,11 +40,11 @@ def connect():
         else:
             cnx.close()
     return None
-
+#Create Tables
 def createTables(cnx):
     cursor = cnx.cursor()
     print("CREATING TABLES...")
-    for name, ddl in TABLES.items():
+    for name, ddl in Statements.TABLES.items():
         try:
             cursor.execute(ddl)
             print('CREATED TABLE: {}'.format(name))
@@ -52,19 +53,26 @@ def createTables(cnx):
     cursor.close()
     return
 
+# add entities
+def addCar(cnx, car, user):
+    print(Statements.INSERT['Cars'])
+    print(car.toTuple())
+    SQLInsert(cnx, Statements.INSERT['Cars'], car.toTuple())
+    return
+# get entities
 def getAccount(cnx, u, p):
     cursor = cnx.cursor()
-    cursor.execute(USER_LOGIN, (u, p))
+    cursor.execute(Statements.USER_LOGIN, (u, p))
     user = None
     for c in cursor:
-        e = Employee(c[0], c[1], c[2], c[3], c[4], c[5])
+        e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1)
         user = User(u, p, e)
     cursor.close()
     return user
 def SQLInsert(cnx, stmt, values):
     cursor = cnx.cursor()
     cursor.execute(stmt, values)
-    cursor.commit()
+    cnx.commit()
     cursor.close()
     return
 def SQLUpdate():

@@ -30,6 +30,9 @@ class Car:
         return self._sold
     def getPrice(self):
         return self._price
+    def toTuple(self):
+        return (self._vin, self._make, self._model,\
+                self._year, self._colour, 1 if self._sold else 0, self._price)
     def __str__(self):
         result = """VIN: {}
         MAKE: {}
@@ -96,6 +99,8 @@ class Employee:
     def removeFromSalary(self, amount):
         self._salary = self._salary - amount
         return
+    def isManager(self):
+        return self._isManager
     def __str__(self):
         result = """ID: {}
         NAME: {}

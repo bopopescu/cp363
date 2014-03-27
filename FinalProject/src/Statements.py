@@ -6,7 +6,7 @@ Created on 2014-03-25
 TABLES = {}
 TABLES['Employee'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`Employee` ("
-    "`eid` INT NOT NULL,"
+    "`eid` INT NOT NULL AUTO_INCREMENT,"
     "`ename` VARCHAR(45) NULL,"
     "`salary` DECIMAL NULL,"
     "`date_of_employment` VARCHAR(45) NULL,"
@@ -43,7 +43,7 @@ TABLES['UpdateExpenses'] = (
     "ENGINE = InnoDB")
 TABLES['Cars'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`Cars` ("
-    "`vin` INT NOT NULL,"
+    "`vin` VARCHAR(20) NOT NULL,"
     "`make` VARCHAR(45) NULL,"
     "`model` VARCHAR(45) NULL,"
     "`colour` VARCHAR(45) NULL,"
@@ -55,7 +55,7 @@ TABLES['Cars'] = (
 TABLES['UpdateCars'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`UpdateCars` ("
     "`eid` INT NOT NULL,"
-    "`vin` INT NOT NULL,"
+    "`vin` VARCHAR(20) NOT NULL,"
     "`date` VARCHAR(45) NULL,"
     "`change` VARCHAR(400) NULL,"
     "PRIMARY KEY (`eid`, `vin`),"
@@ -87,7 +87,7 @@ TABLES['Suppliers'] = (
 TABLES['CarSupply'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`CarSupply` ("
     "`sid` INT NOT NULL,"
-    "`vin` INT NOT NULL,"
+    "`vin` VARCHAR(20) NOT NULL,"
     "`date_supplied` VARCHAR(45) NULL,"
     "PRIMARY KEY (`sid`, `vin`),"
     "INDEX `sid_idx` (`sid` ASC),"
@@ -153,7 +153,7 @@ TABLES['HasCustomer'] = (
 TABLES['CustomerPurchases'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`CustomerPurchases` ("
     "`cid` INT NOT NULL,"
-    "`vin` INT NOT NULL,"
+    "`vin` VARCHAR(20) NOT NULL,"
     "PRIMARY KEY (`cid`, `vin`),"
     "INDEX `cid_idx` (`cid` ASC),"
     "INDEX `vin_idx` (`vin` ASC),"
@@ -170,8 +170,8 @@ TABLES['CustomerPurchases'] = (
     "ENGINE = InnoDB")
 TABLES['Logins'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`Logins` ("
-    "`eid` INT NOT NULL,"
-    "`username` VARCHAR(8) NOT NULL,"
+    "`eid` INT NOT NULL UNIQUE,"
+    "`username` VARCHAR(8) NOT NULL UNIQUE,"
     "`password` VARCHAR(8) NOT NULL,"
     "PRIMARY KEY (`eid`),"
     "CONSTRAINT `eid6`"
@@ -179,16 +179,20 @@ TABLES['Logins'] = (
     "    REFERENCES `CarCompany`.`Employee` (`eid`)"
     "    ON DELETE CASCADE"
     "    ON UPDATE NO ACTION)")
+
 INSERT = {}
 INSERT['Employee'] = (
     "INSERT INTO `CarCompany`.`Employee`"
     "    (`eid`, `ename`, `salary`, `date_of_employment`, `date_of_departure`, `is_manager`, `manager_id`)"
-    "    VALUES (%d, %s, %d, %s, %s, %d, %d)")
+    "    VALUES (%s, %s, %s, %s, %s, %s, %s)")
 INSERT['Expenses'] = (
     ""
     "")
 INSERT['UpdateExpenses'] = ()
-INSERT['Cars'] = ()
+INSERT['Cars'] = (
+    "INSERT INTO `CarCompany`.`Cars`"
+    "    (`vin`, `make`, `model`, `year`, `colour`, `sold`, `price`)"
+    "    VALUES (%s, %s, %s, %s, %s, %s, %s)")
 INSERT['UpdateCars'] = ()
 INSERT['Suppliers'] = ()
 INSERT['CarSupply'] = ()

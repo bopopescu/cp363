@@ -254,12 +254,14 @@ def newSale(cnx,user):
     try:
         clear()
         #DatabaseHelper.addSale(cnx, s, user)
-        print("Car successfully added.")
+        print("Sale successfully added.")
         input("Please press enter to continue.")
     except:
-        print("Could not add this car.")
+        print("Could not add Sale")
         input("Please press enter to continue.")
     return
 
 def profitSummary(cnx,user):
+    print(PROG_HEADER)
+    input("Your profit Summary")
     return

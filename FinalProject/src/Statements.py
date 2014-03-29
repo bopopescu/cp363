@@ -17,7 +17,7 @@ TABLES['Employee'] = (
     "ENGINE = InnoDB")
 TABLES['Expenses'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`Expenses` ("
-    "`xid` INT NOT NULL,"
+    "`xid` INT NOT NULL AUTO_INCREMENT,"
     "`date` VARCHAR(45) NULL,"
     "`cost` DECIMAL NULL,"
     "`details` VARCHAR(400) NULL,"
@@ -25,9 +25,10 @@ TABLES['Expenses'] = (
     "ENGINE = InnoDB")
 TABLES['UpdateExpenses'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`UpdateExpenses` ("
+    "`ueid` INT NOT NULL AUTO_INCREMENT,"
     "`eid` INT NOT NULL,"
     "`xid` INT NOT NULL,"
-    "PRIMARY KEY (`eid`, `xid`),"
+    "PRIMARY KEY (`ueid`, `eid`, `xid`),"
     "INDEX `eid_idx` (`eid` ASC),"
     "INDEX `xid_idx` (`xid` ASC),"
     "CONSTRAINT `eid`"
@@ -54,11 +55,12 @@ TABLES['Cars'] = (
     "ENGINE = InnoDB")
 TABLES['UpdateCars'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`UpdateCars` ("
+    "`ucid INT NOT NULL AUTO_INCREMENT`"
     "`eid` INT NOT NULL,"
     "`vin` VARCHAR(20) NOT NULL,"
     "`date` VARCHAR(45) NULL,"
     "`change` VARCHAR(400) NULL,"
-    "PRIMARY KEY (`eid`, `vin`),"
+    "PRIMARY KEY (`ucid`, `eid`, `vin`),"
     "INDEX `vin_idx` (`vin` ASC),"
     "INDEX `eid_idx` (`eid` ASC),"
     "CONSTRAINT `eid2`"
@@ -74,7 +76,7 @@ TABLES['UpdateCars'] = (
     "ENGINE = InnoDB")
 TABLES['Suppliers'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`Suppliers` ("
-    "`sid` INT NOT NULL,"
+    "`sid` INT NOT NULL AUTO_INCREMENT,"
     "`sname` VARCHAR(45) NULL,"
     "`phone` VARCHAR(45) NULL,"
     "`postal_code` VARCHAR(45) NULL,"
@@ -124,7 +126,7 @@ TABLES['WorksWith'] = (
     "ENGINE = InnoDB")
 TABLES['Customer'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`Customer` ("
-    "`cid` INT NOT NULL,"
+    "`cid` INT NOT NULL AUTO_INCREMENT,"
     "`cname` VARCHAR(45) NULL,"
     "`join_date` VARCHAR(45) NULL,"
     "`phone` VARCHAR(45) NULL,"
@@ -183,23 +185,43 @@ TABLES['Logins'] = (
 INSERT = {}
 INSERT['Employee'] = (
     "INSERT INTO `CarCompany`.`Employee`"
-    "    (`eid`, `ename`, `salary`, `date_of_employment`, `date_of_departure`, `is_manager`, `manager_id`)"
-    "    VALUES (%s, %s, %s, %s, %s, %s, %s)")
+    "    (`ename`, `salary`, `date_of_employment`, `date_of_departure`, `is_manager`, `manager_id`)"
+    "    VALUES (%s, %s, %s, %s, %s, %s)")
+INSERT['Login'] = (
+    "INSERT INTO `CarCompany`.`Logins`"
+    "    (`eid`, `username`, `password`)"
+    "    VALUES (%s, %s, %s)")
 INSERT['Expenses'] = (
-    ""
-    "")
-INSERT['UpdateExpenses'] = ()
+    "INSERT INTO `CarCompany`.`Expenses` (`date`, `cost`, `details`)"
+    "    VALUES (%s, %s, %s)")
+INSERT['UpdateExpenses'] = (
+    "INSERT INTO `CarCompany`.`UpdateExpenses` (`eid`, `xid`)"
+    "    VALUES (%s, %s)")
 INSERT['Cars'] = (
     "INSERT INTO `CarCompany`.`Cars`"
     "    (`vin`, `make`, `model`, `year`, `colour`, `sold`, `price`)"
     "    VALUES (%s, %s, %s, %s, %s, %s, %s)")
-INSERT['UpdateCars'] = ()
-INSERT['Suppliers'] = ()
-INSERT['CarSupply'] = ()
-INSERT['WorksWith'] = ()
-INSERT['Customer'] = ()
-INSERT['HasCustomer'] = ()
-INSERT['CustomerPurchases'] = ()
+INSERT['UpdateCars'] = (
+    "INSERT INTO `CarCompany`.`UpdateCars` (`eid`, `vin`, `date`, `change`)"
+    "    VALUES (%s, %s, %s, %s)")
+INSERT['Suppliers'] = (
+    "INSERT INTO `CarCompany`.`Suppliers` (`sname`, `phone`, `postal_code`, `street`, `city`, `country`, `province`)"
+    "    VALUES (%s, %s, %s, %s, %s, %s, %s)")
+INSERT['CarSupply'] = (
+    "INSERT INTO `CarCompany`.`CarSupply` (`sid`, `vin`, `date_supplied`)"
+    "    VALUES (%s, %s, %s)")
+INSERT['WorksWith'] = (
+    "INSERT INTO `CarCompany`.`WorksWith` (`eid`, `sid`, `date`)"
+    "    VALUES (%s, %s, %s)")
+INSERT['Customer'] = (
+    "INSERT INTO `CarCompany`.`Customer` (`cname`, `join_date`, `phone`)"
+    "    VALUES (%s, %s, %s)")
+INSERT['HasCustomer'] = (
+    "INSERT INTO `CarCompany`.`HasCustomer` (`eid`, `cid`, `date`, `details`)"
+    "    VALUES (%s, %s, %s, %s)")
+INSERT['CustomerPurchases'] = (
+    "INSERT INTO `CarCompany`.`CustomerPurchases` (`cid`, `vin`)"
+    "    VALUES (%s, %s)")
 USER_LOGIN = (
     "SELECT * FROM `CarCompany`.`Employee` WHERE `eid`=("
     "    SELECT `eid` FROM `CarCompany`.`Logins` WHERE `username`=%s AND `password`=%s LIMIT 1"

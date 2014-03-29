@@ -3,10 +3,15 @@ Created on 2014-03-25
 
 @author: mo
 '''
-import mysql.connector
+import datetime
+
 from mysql.connector import errorcode
-import Statements
+import mysql.connector
 from Entities import *
+from datetime import date
+import Statements
+import datetime
+
 
 DATABASE_USER = 'cp363'
 DATABASE_PASSWORD = 'cp363'
@@ -55,9 +60,21 @@ def createTables(cnx):
 
 # add entities
 def addCar(cnx, car, user):
-    print(Statements.INSERT['Cars'])
-    print(car.toTuple())
     SQLInsert(cnx, Statements.INSERT['Cars'], car.toTuple())
+    SQLInsert(cnx, Statements.INSERT['UpdateCars'], (user.getId(), car.getVin(), date.today(), 'Added Vehicle'))
+    return
+def addCustomer(cnx, customer, user):
+    cust_id = SQLInsertGetId(cnx, Statements.INSERT['Customer'], customer.toTuple()[1:])
+    if cust_id != -1:
+        customer.setId(cust_id)
+        SQLInsert(cnx, Statements.INSERT['HasCustomer'], (user.getId(), customer.getId(), date.today(), 'New Customer'))
+    return
+def addEmployee(cnx, newuser):
+    employee = newuser.getEmployee()
+    emp_id = SQLInsertGetId(cnx, Statements.INSERT['Employee'], employee.toTuple()[1:])
+    if emp_id != -1:
+        newuser.getEmployee().setId(emp_id)
+        SQLInsert(cnx, Statements.INSERT['Login'], newuser.toTuple())
     return
 # get entities
 def getAccount(cnx, u, p):
@@ -75,5 +92,12 @@ def SQLInsert(cnx, stmt, values):
     cnx.commit()
     cursor.close()
     return
+def SQLInsertGetId(cnx, stmt, values):
+    cursor = cnx.cursor()
+    cursor.execute(stmt, values)
+    i = cursor.lastrowid
+    cnx.commit()
+    cursor.close()
+    return i
 def SQLUpdate():
     return

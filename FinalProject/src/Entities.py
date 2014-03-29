@@ -61,6 +61,9 @@ class Customer:
         return self._joinDate
     def getPhone(self):
         return self._phone
+    def setId(self, i):
+        self._cId = i
+        return
     def __str__(self):
         result = """ID: {}
         NAME: {}
@@ -68,9 +71,11 @@ class Customer:
         PHONE: {}
         """.format(self._cId, self._cName, self._joinDate, self._phone)
         return result
+    def toTuple(self):
+        return (self._cId, self._cName, self._joinDate, self._phone)
 
 class Employee:
-    def __init__(self, eid, name, salary, dateEmployed, dateLeft, isManager):
+    def __init__(self, eid, name, salary, dateEmployed, dateLeft, isManager, manager):
         """
         Creates an Employee object
         """
@@ -80,6 +85,7 @@ class Employee:
         self._dateEmployed = dateEmployed
         self._dateLeft = dateLeft
         self._isManager = isManager
+        self._managerId = manager
     def getId(self):
         return self._eId
     def getName(self):
@@ -90,6 +96,9 @@ class Employee:
         return self._dateEmployed
     def getDateLeft(self):
         return self._dateLeft
+    def setId(self, i):
+        self._eId = i
+        return
     def setDateLeft(self, date):
         self._dateLeft = date
         return
@@ -101,6 +110,8 @@ class Employee:
         return
     def isManager(self):
         return self._isManager
+    def getManager(self):
+        return self._managerId
     def __str__(self):
         result = """ID: {}
         NAME: {}
@@ -111,7 +122,9 @@ class Employee:
         """.format(self._eId, self._name, self._salary,\
                    self._dateEmployed, self._dateLeft, self._isManager)
         return result
-
+    def toTuple(self):
+        return (self._eId, self._name, self._dateEmployed, self._dateLeft,
+                1 if self._isManager else 0, self._managerId)
 class Expense:
     def __init__(self, xid, date, cost, details):
         """
@@ -129,6 +142,9 @@ class Expense:
         return self._cost
     def getDetails(self):
         return self._details
+    def setId(self, i):
+        self._xId = i
+        return
     def __str__(self):
         result = """ID: {}
         DATE: {}
@@ -137,6 +153,8 @@ class Expense:
         {}
         """.format(self._xId, self._date, self._cost, self._details)
         return result
+    def toTuple(self):
+        return (self._xId, self._date, self._cost, self._details)
 
 class Supplier:
     def __init__(self, sid, name, phone, street, city, province, country, postalcode):
@@ -172,6 +190,9 @@ class Supplier:
         {}, {}
         {} {}
         """.format(self._street, self._city, self._province, self._country, self._postalCode)
+    def setId(self, i):
+        self._sId = i
+        return
     def __str__(self):
         result = """ID: {}
         NAME: {}
@@ -179,6 +200,9 @@ class Supplier:
         ADDRESS: {}
         """.format(self._sId, self._sName, self._phone, self.getAddress())
         return result
+    def toTuple(self):
+        return (self._sId, self._sName, self._phone, self._street, self._city, self._province, self._country, self._postalCode)
+
 class User:
     def __init__(self, username, password, employee):
         self._username = username
@@ -194,4 +218,6 @@ class User:
     NAME: {}
     """.format(self._username, self._employee.getId(), self._employee.getName())
         return result
+    def toTuple(self):
+        return (self._employee.getId(), self._username, self._password)
     

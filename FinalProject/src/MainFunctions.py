@@ -19,6 +19,7 @@ MANAGE_EMPLOYEES_MENU = ["Add employee", "Remove employee","Return to previous"]
 MANAGE_EXPENSES_MENU = ["Add expense", "Remove expense","Return to previous"]
 MANAGE_SALES_MENU = ["Add sale","Return to previous"]
 
+
 # screen clear
 def clear():
     os.system('cls')
@@ -74,7 +75,36 @@ def newCar(cnx, user):
         input("Please press enter to continue.")
     return
 
+#Search Functions
+def searchCars():
+    return
+
+def searchEmployees():
+    return
+
+def searchSales():
+    return
+
+def searchExpenses():
+    return 
+
+SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
+
 def search(cnx, user):
+    run = True
+    while run == True:
+        clear()
+        print(PROG_HEADER)     
+        print("Please choose from the following options:")
+        for j in range(len(SEARCH_MENU)):
+            print("{}) {}".format(j+1, SEARCH_MENU[j][0]))
+        i = input("Selection(number from above): ")
+        if i.isdigit():
+            i = int(i)
+            if i == len(SEARCH_MENU):
+                run = False
+            else:
+                SEARCH_MENU[i-1][1]()
     return
 
 def manageCarsSelection(cnx, user):

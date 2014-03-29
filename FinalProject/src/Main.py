@@ -6,7 +6,7 @@ Created on 2014-03-25
 from MainFunctions import *
 
 # menus and main
-MANAGER_MENU = ("Manage Cars", "Manage Employees", "Manage Expenses", "Manage Sales", "Profit Summary", "Exit")
+MANAGER_MENU = (("Manage Cars",manageCarsSelection), ("Manage Employees",manageEmployeesSelection), ("Manage Expenses",manageExpensesSelection), ("Manage Sales",manageSalesSelection), ("Profit Summary",None), ("Exit",None))
 SALES_MENU = (("Add Cars", newCar), ("Make a Sale", newSale), ("Car Detail Search", search), ("Exit", None))
 
 def main():
@@ -26,8 +26,8 @@ def main():
                 elif i == 0:
                     continue
                 else:
-                    print(MANAGER_MENU[i-1])
-                    input("Press enter to return to the main menu")
+                    clear()
+                    MANAGER_MENU[i-1][1](con, user)
             else:
                 i = salesPersonSelection()
                 if i == len(SALES_MENU):
@@ -45,7 +45,7 @@ def main():
 def managerSelection():
     print("Please choose from the following options:")
     for j in range(len(MANAGER_MENU)):
-        print("{}) {}".format(j+1, MANAGER_MENU[j]))
+        print("{}) {}".format(j+1, MANAGER_MENU[j][0]))
     i = input("Selection(number from above): ")
     if i.isdigit():
         i = int(i)
@@ -66,5 +66,5 @@ def salesPersonSelection():
     else:
         i = 0
     return i
-# run proram
+# run program
 main()

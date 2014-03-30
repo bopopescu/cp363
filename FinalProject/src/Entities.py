@@ -234,4 +234,5 @@ class Sale:
     VIN: {}
     """.format(self._cid, self._vin)
         return result
-    
+    def toTuple(self):
+        return (self._cid, self._vin)

@@ -85,6 +85,7 @@ def addExpense(cnx, ex, user):
 # remove entites
 def removeEmployee(cnx, empid):
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid))
+    return
 # get entities
 def getAccount(cnx, u, p):
     cursor = cnx.cursor()

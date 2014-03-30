@@ -299,9 +299,14 @@ def newExpense(cnx,user):
     
     e = Expense(0,date,cost,details)
 
-    
-    DatabaseHelper.addExpense(cnx, e,user)
-    
+    try:
+        clear()
+        DatabaseHelper.addExpense(cnx, e,user)
+        print("Expense successfully added.")
+        input("Please press enter to continue.")
+    except:
+        print("Could not add expense.")
+        input("Please press enter to continue.")
         
     return
 

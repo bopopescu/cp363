@@ -61,7 +61,7 @@ def createTables(cnx):
 # add entities
 def addCar(cnx, car, user):
     SQLInsert(cnx, Statements.INSERT['Cars'], car.toTuple())
-    SQLInsert(cnx, Statements.INSERT['UpdateCars'], (user.getId(), car.getVin(), date.today(), 'Added Vehicle'))
+    SQLInsert(cnx, Statements.INSERT['UpdateCars'], (user.getEmployee().getId(), car.getVin(), date.today(), 'Added Vehicle'))
     return
 def addCustomer(cnx, customer, user):
     cust_id = SQLInsertGetId(cnx, Statements.INSERT['Customer'], customer.toTuple()[1:])

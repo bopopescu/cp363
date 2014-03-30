@@ -226,7 +226,14 @@ DELETE = {}
 DELETE['Employee'] =(
     "DELETE FROM `CarCompany`.`Employee`"
     "    WHERE `eid`=%s")
+DELETE['Expenses'] = (
+    "DELETE FROM `CarCompany`.`Expenses`"
+    "    WHERE `xid`=%s")
 USER_LOGIN = (
     "SELECT * FROM `CarCompany`.`Employee` WHERE `eid`=("
     "    SELECT `eid` FROM `CarCompany`.`Logins` WHERE `username`=%s AND `password`=%s LIMIT 1"
     ")")
+SELL_CAR = (
+    "UPDATE `CarCompany`.`Cars`"
+    "SET `sold`=%s"
+    "WHERE `vin`=%s")

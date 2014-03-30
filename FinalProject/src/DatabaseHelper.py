@@ -48,11 +48,11 @@ def connect():
 #Create Tables
 def createTables(cnx):
     cursor = cnx.cursor()
-    print("CREATING TABLES...")
+    print("CHECKING TABLES...")
     for name, ddl in Statements.TABLES.items():
         try:
             cursor.execute(ddl)
-            print('CREATED TABLE: {}'.format(name))
+            print('TABLE: {}..OK'.format(name))
         except mysql.connector.Error as err:
             print('ERROR CREATING TABLE: {} \nERR: {}'.format(name, err.msg))
     cursor.close()
@@ -77,25 +77,29 @@ def addEmployee(cnx, newuser):
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['Login'], newuser.toTuple())
     return
 def addExpense(cnx, ex, user):
-    ex_id = SQLInsertGetId(cnx, Statements.INSERT['Expenses'], ex.toTuple())
+    ex_id = SQLInsertGetId(cnx, Statements.INSERT['Expenses'], ex.toTuple()[1:])
     if ex_id != -1:
         ex.setId(ex_id)
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateExpenses'], (ex.getId(), user.getEmployee().getId()))
     return
 # remove entites
 def removeEmployee(cnx, empid):
-    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid))
+    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid,))
+    return
+def removeExpense(cnx, xid):
+    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Expenses'], (xid, ))
     return
 # get entities
 def getAccount(cnx, u, p):
-    cursor = cnx.cursor()
-    cursor.execute(Statements.USER_LOGIN, (u, p))
+    r = SQLSelect(cnx, Statements.USER_LOGIN, (u, p))
     user = None
-    for c in cursor:
-        e = Employee(int(c[0]), c[1], c[2], c[3], c[4], c[5]==1, c[6])
-        user = User(u, p, e)
-    cursor.close()
+    for c in r:
+        if len(c) == 7:
+            e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1, c[6])
+            user = User(u, p, e)
     return user
+
+# generic statement handlers
 def SQLDeleteInsertUpdate(cnx, stmt, values):
     print(stmt)
     print(values)
@@ -113,5 +117,16 @@ def SQLInsertGetId(cnx, stmt, values):
     cnx.commit()
     cursor.close()
     return i
-def SQLUpdate():
-    return
+def SQLSelect(cnx, stmt, values, header=False):
+    cursor = cnx.cursor()
+    cursor.execute(stmt, values)
+    result = []
+    if header:
+        result.append(cursor.column_names)
+    for c in cursor:
+        row = []
+        for d in c:
+            row.append(d)
+        result.append(row)
+    cursor.close
+    return result

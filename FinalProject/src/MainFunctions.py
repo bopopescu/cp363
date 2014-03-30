@@ -17,7 +17,7 @@ CP363 Database I
 MANAGE_CARS_MENU = ["Add car","Remove car","Return to previous"]
 DELETE_CARS_MENU = ["Find cars","Remove car by VIN","Return to previous"]
 MANAGE_EMPLOYEES_MENU = ["Add employee", "Remove employee","Return to previous"]
-MANAGE_EXPENSES_MENU = ["Add expense", "Remove expense","Return to previous"]
+MANAGE_EXPENSES_MENU = ["Add expense", "Update expense","Return to previous"]
 MANAGE_SALES_MENU = ["Add sale","Return to previous"]
 
 
@@ -77,35 +77,40 @@ def newCar(cnx, user):
     return
 
 #Search Functions
-def searchCars():
+def searchCars(cnx,user):
     clear()
-    input("Enter a search query:")
-    input("This does nothing. Lol.")
-    #call query for cars
+    s = input("Enter a search query:")
+    r = DatabaseHelper.searchCars(cnx, s)
+    for i in range(len(r)):
+        print(r[i])
     return
 
-def searchEmployees():
+
+
+def searchEmployees(cnx,user):
     clear()
-    input("Enter a search query:")
-    input("This does nothing. Lol.")
-    #call query for employees
+    s = input("Enter a search query:")
+    r = DatabaseHelper.searchEmployees(cnx, s)
+    for i in range(len(r)):
+        print(r[i])
     
     return
 
-def searchSales():
+def searchSales(cnx,user):
     clear()
-    input("Enter a search query:")
-    input("This does nothing. Lol.")
-    #call query for sales
+    s = input("Enter a search query:")
+    r = DatabaseHelper.searchSales(cnx, s)
+    for i in range(len(r)):
+        print(r[i])
     
     return
 
-def searchExpenses():
+def searchExpenses(cnx,user):
     clear()
-    input("Enter a search query:")
-    input("This does nothing. Lol.")
-    #call query for sales
-    
+    s = input("Enter a search query:")
+    r = DatabaseHelper.searchExpenses(cnx, s)
+    for i in range(len(r)):
+        print(r[i])
     return 
 
 SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
@@ -124,7 +129,7 @@ def search(cnx, user):
             if i == len(SEARCH_MENU):
                 run = False
             else:
-                SEARCH_MENU[i-1][1]()
+                SEARCH_MENU[i-1][1](cnx,user)
     return
 
 def manageCarsSelection(cnx, user):
@@ -276,7 +281,7 @@ def manageExpensesSelection(cnx, user):
                 newExpense(cnx,user)
             elif i == 2:
                 clear()
-                deleteExpense(cnx,user)
+                updateExpense(cnx,user)
             elif i == 3:
                 run = False
     return
@@ -310,7 +315,21 @@ def newExpense(cnx,user):
         
     return
 
-def deleteExpense(cnx,user):
+def updateExpense(cnx,user):
+    print(PROG_HEADER)
+    print("Please enter the id of the expense to update")
+    
+    xid = 0
+    while xid < 1:
+        try:
+            xid = int(input("Expense id: "))
+        except:
+            print("Invalid expense id")
+            xid = 0
+    
+    DatabaseHelper.removeExpense(cnx, xid)
+    
+        
     return
 
 def manageSalesSelection(cnx, user):

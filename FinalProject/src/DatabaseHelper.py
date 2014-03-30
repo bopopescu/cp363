@@ -61,7 +61,7 @@ def createTables(cnx):
 # add entities
 def addCar(cnx, car, user):
     SQLInsert(cnx, Statements.INSERT['Cars'], car.toTuple())
-    SQLInsert(cnx, Statements.INSERT['UpdateCars'], (user.getId(), car.getVin(), date.today(), 'Added Vehicle'))
+    SQLInsert(cnx, Statements.INSERT['UpdateCars'], (user.getEmployee().getId(), car.getVin(), date.today(), 'Added Vehicle'))
     return
 def addCustomer(cnx, customer, user):
     cust_id = SQLInsertGetId(cnx, Statements.INSERT['Customer'], customer.toTuple()[1:])
@@ -82,17 +82,21 @@ def getAccount(cnx, u, p):
     cursor.execute(Statements.USER_LOGIN, (u, p))
     user = None
     for c in cursor:
-        e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1, c[6])
+        e = Employee(int(c[0]), c[1], c[2], c[3], c[4], c[5]==1, c[6])
         user = User(u, p, e)
     cursor.close()
     return user
 def SQLInsert(cnx, stmt, values):
+    print(stmt)
+    print(values)
     cursor = cnx.cursor()
     cursor.execute(stmt, values)
     cnx.commit()
     cursor.close()
     return
 def SQLInsertGetId(cnx, stmt, values):
+    print(stmt)
+    print(values)
     cursor = cnx.cursor()
     cursor.execute(stmt, values)
     i = cursor.lastrowid

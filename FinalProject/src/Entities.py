@@ -123,7 +123,7 @@ class Employee:
                    self._dateEmployed, self._dateLeft, self._isManager)
         return result
     def toTuple(self):
-        return (self._eId, self._name, self._dateEmployed, self._dateLeft,
+        return (self._eId, self._name, self._salary,self._dateEmployed, self._dateLeft,
                 1 if self._isManager else 0, self._managerId)
 class Expense:
     def __init__(self, xid, date, cost, details):
@@ -201,7 +201,7 @@ class Supplier:
         """.format(self._sId, self._sName, self._phone, self.getAddress())
         return result
     def toTuple(self):
-        return (self._sId, self._sName, self._phone, self._street, self._city, self._province, self._country, self._postalCode)
+        return (self._sId, self._sName, self._phone,self._postalCode, self._street, self._city, self._country,self._province)
 
 class User:
     def __init__(self, username, password, employee):

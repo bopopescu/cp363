@@ -82,12 +82,13 @@ def addExpense(cnx, ex, user):
         ex.setId(ex_id)
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateExpenses'], (ex.getId(), user.getEmployee().getId()))
     return
+
 # remove entites
 def removeEmployee(cnx, empid):
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid,))
     return
 def removeExpense(cnx, xid):
-    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Expenses'], (xid, ))
+    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Expenses'], (xid,))
     return
 # get entities
 def getAccount(cnx, u, p):

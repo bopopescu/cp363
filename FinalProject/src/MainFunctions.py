@@ -53,7 +53,7 @@ def newCar(cnx, user):
         try:
             year = int(input("Year: "))
         except:
-            print("Invalid year, please enter a valid price > 0")
+            print("Invalid year, please enter a valid year >= 1900")
             year = 0
     colour = input("Colour: ").upper()
     sold = False
@@ -77,15 +77,34 @@ def newCar(cnx, user):
 
 #Search Functions
 def searchCars():
+    clear()
+    input("Enter a search query:")
+    input("This does nothing. Lol.")
+    #call query for cars
     return
 
 def searchEmployees():
+    clear()
+    input("Enter a search query:")
+    input("This does nothing. Lol.")
+    #call query for employees
+    
     return
 
 def searchSales():
+    clear()
+    input("Enter a search query:")
+    input("This does nothing. Lol.")
+    #call query for sales
+    
     return
 
 def searchExpenses():
+    clear()
+    input("Enter a search query:")
+    input("This does nothing. Lol.")
+    #call query for sales
+    
     return 
 
 SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
@@ -221,5 +240,28 @@ def manageSalesSelection(cnx, user):
     return
 
 def newSale(cnx,user):
+    print(PROG_HEADER)
+    print("Please enter the following details for the Sale")
+    vin = input("Vehicle Identification Number(VIN):\n").upper()
+    cid = 0
+    while cid < 1:
+        try:
+            cid = int(input("Customer id:"))
+        except:
+            print("Invalid customer id")
+            cid = 0
+    s = Sale(cid,vin)
+    try:
+        clear()
+        #DatabaseHelper.addSale(cnx, s, user)
+        print("Sale successfully added.")
+        input("Please press enter to continue.")
+    except:
+        print("Could not add Sale")
+        input("Please press enter to continue.")
     return
 
+def profitSummary(cnx,user):
+    print(PROG_HEADER)
+    input("Your profit Summary")
+    return

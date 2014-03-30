@@ -221,3 +221,17 @@ class User:
     def toTuple(self):
         return (self._employee.getId(), self._username, self._password)
     
+class Sale:
+    def __init__(self, cid, vin):
+        self._cid = cid
+        self._vin = vin
+    def getCid(self):
+        return self._cid
+    def getVin(self):
+        return self._vin
+    def __str__(self):
+        result = """CID: {}
+    VIN: {}
+    """.format(self._cid, self._vin)
+        return result
+    

@@ -6,7 +6,7 @@ Created on 2014-03-25
 from MainFunctions import *
 
 # menus and main
-MANAGER_MENU = (("Manage Cars",manageCarsSelection), ("Manage Employees",manageEmployeesSelection), ("Manage Expenses",manageExpensesSelection), ("Manage Sales",manageSalesSelection), ("Profit Summary",None), ("Exit",None))
+MANAGER_MENU = (("Manage Cars",manageCarsSelection), ("Manage Employees",manageEmployeesSelection), ("Manage Expenses",manageExpensesSelection), ("Manage Sales",manageSalesSelection), ("Profit Summary",profitSummary), ("Exit",None))
 SALES_MENU = (("Add Cars", newCar), ("Make a Sale", newSale), ("Car Detail Search", search), ("Exit", None))
 
 def main():
@@ -37,7 +37,6 @@ def main():
                 else:
                     clear()
                     SALES_MENU[i-1][1](con, user)
-                    input("Press enter to return to the main menu")
     DatabaseHelper.close(con)
     clear()
     return

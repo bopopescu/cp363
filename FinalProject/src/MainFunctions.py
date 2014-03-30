@@ -65,9 +65,9 @@ def newCar(cnx, user):
             print("Invalid price, please enter a valid price > 0")
             price = 0
     c = Car(vin, make, model, year, colour, sold, price)
+    DatabaseHelper.addCar(cnx, c, user)
     try:
-        clear()
-        DatabaseHelper.addCar(cnx, c, user)
+        
         print("Car successfully added.")
         input("Please press enter to continue.")
     except:

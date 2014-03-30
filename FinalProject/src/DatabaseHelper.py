@@ -67,7 +67,7 @@ def addCustomer(cnx, customer, user):
     cust_id = SQLInsertGetId(cnx, Statements.INSERT['Customer'], customer.toTuple()[1:])
     if cust_id != -1:
         customer.setId(cust_id)
-        SQLInsert(cnx, Statements.INSERT['HasCustomer'], (user.getId(), customer.getId(), date.today(), 'New Customer'))
+        SQLInsert(cnx, Statements.INSERT['HasCustomer'], (user.getEmployee().getId(), customer.getId(), date.today(), 'New Customer'))
     return
 def addEmployee(cnx, newuser):
     employee = newuser.getEmployee()

@@ -6,6 +6,7 @@ Created on 2014-03-26
 import getpass
 import os
 import DatabaseHelper
+import time
 from Entities import *
 
 PROG_HEADER = """Used Car Dealer
@@ -192,13 +193,6 @@ def newEmployee(cnx,user):
     print(PROG_HEADER)
     print("Please enter the following details for the Employee")
     
-    eid = 0
-    while eid < 1:
-        try:
-            eid = int(input("Employee id:"))
-        except:
-            print("Invalid employee id")
-            eid = 0
             
     name = input("Full Name: ")
     
@@ -207,17 +201,17 @@ def newEmployee(cnx,user):
         try:
             salary = int(input("Salary: "))
         except:
-            print("Invalid employee id")
-            eid = 0
-    dateEmployed = input("Employment Date: ")
+            print("Invalid salary")
+            
+    dateEmployed = time.strftime("%d/%m/%Y")
     
     while True:
         isManager = input("Is employee a manager?(Y/N): ").upper()
         if isManager == "Y":
-            isManager = 1
+            isManager = True
             break
         elif isManager == "N":
-            isManager = 0
+            isManager = False
             break
             
     mid = 0
@@ -226,11 +220,11 @@ def newEmployee(cnx,user):
             mid = int(input("Manager id: "))
         except:
             print("Invalid manager id")
-            eid = 0
+            mid = 0
             
     username = input("Username: ")
     password = input("Password: ")        
-    e = Employee(eid,name,salary,dateEmployed,None,isManager,mid)
+    e = Employee(0,name,salary,dateEmployed,None,isManager,mid)
     user = User(username, password, e)
 
     try:
@@ -295,8 +289,24 @@ def manageSalesSelection(cnx, user):
 def newSale(cnx,user):
     print(PROG_HEADER)
     print("Please enter the following details for the Sale")
+    
+    while True:
+        exist = input("Create new customer?(Y/N): ").upper()
+        if exist == "Y":
+            c = newCustomer(cnx,user)
+            if c != None:
+                clear()
+                print(PROG_HEADER)
+                print("Please enter the following details for the Sale")
+                break
+        elif exist == "N":
+            break
+    
     vin = input("Vehicle Identification Number(VIN):\n").upper()
-    cid = 0
+    try:
+        cid = c.getId()
+    except:
+        cid = 0
     while cid < 1:
         try:
             cid = int(input("Customer id:"))
@@ -314,6 +324,27 @@ def newSale(cnx,user):
         input("Please press enter to continue.")
     return
 
+def newCustomer(cnx,user):
+    clear()
+    print(PROG_HEADER)
+    print("Please enter the following details for the new Customer")
+               
+    cname = input("Customer name: ")
+    join_date = time.strftime("%d/%m/%Y")
+    phone = input("Phone number: ")
+    
+    customer = Customer(0,cname,join_date,phone)
+    try:
+        clear()
+        DatabaseHelper.addCustomer(cnx, customer, user)
+        print("Customer successfully created")
+        input("Please press enter to continue.")
+        return customer
+    except:
+        print("Could not create customer")
+        input("Please press enter to continue.")
+        return None
+    
 def profitSummary(cnx,user):
     print(PROG_HEADER)
     input("Your profit Summary")

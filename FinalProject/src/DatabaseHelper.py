@@ -3,14 +3,12 @@ Created on 2014-03-25
 
 @author: mo
 '''
-import datetime
 
 from mysql.connector import errorcode
 import mysql.connector
 from Entities import *
 from datetime import date
 import Statements
-import datetime
 
 
 DATABASE_USER = 'cp363'
@@ -88,6 +86,7 @@ def removeEmployee(cnx, empid):
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid,))
     return
 def removeExpense(cnx, xid):
+    SQLDeleteInsertUpdate(cnx, Statements.DELETE['UpdateExpenses'], (xid,))
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['Expenses'], (xid,))
     return
 # get entities
@@ -99,6 +98,19 @@ def getAccount(cnx, u, p):
             e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1, c[6])
             user = User(u, p, e)
     return user
+def getCar(cnx, vin):
+    r = SQLSelect(cnx, Statements.SELECT['Cars'], (vin,))
+    for i in range(len(r)):
+        if len(r[i]) == 7:
+            r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+    return r
+def getCustomer(cnx, cid):
+    r = SQLSelect(cnx, Statements.SELECT['Customer'], (cid,))
+    for i in range(len(r)):
+        if len(r[i]) == 4:
+            r[i] = Customer(r[i][0], r[i][1], r[i][2], r[i][3])
+    return r
+# searches
 def searchCars(cnx, query):
     # wild card search to increase number of records
     query = '%' + query + '%'
@@ -106,7 +118,36 @@ def searchCars(cnx, query):
     q = (query for i in range(params))
     r = SQLSelect(cnx, Statements.SEARCH['Cars'], q)
     for i in range(len(r)):
-        r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+        if len(r[i]) == 7:
+            r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+    return r
+def searchEmployees(cnx, query):
+    # wild card search to increase number of records
+    query = '%' + query + '%'
+    r = SQLSelect(cnx, Statements.SEARCH['Cars'], (query,))
+    for i in range(len(r)):
+        if len(r[i]) == 7:
+            r[i] = Employee(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+    return r
+def searchExpenses(cnx, query):
+    # wild card search to increase number of records
+    query = '%' + query + '%'
+    params = 2
+    q = (query for i in range(params))
+    r = SQLSelect(cnx, Statements.SEARCH['Expenses'], q)
+    for i in range(len(r)):
+        if len(r[i]) == 7:
+            r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+    return r
+def searchSales(cnx, query):
+    # wild card search to increase number of records
+    query = '%' + query + '%'
+    r = SQLSelect(cnx, Statements.SEARCH['CustomerPurchases'], (query,))
+    for i in range(len(r)):
+        cust = getCustomer(cnx, r[i][0])
+        car = getCar(cnx, r[i][1])
+        if len(cust) == 1 and len(car) == 1:
+            r[i] = Sale(cust[0], car[0])
     return r
     
 # generic statement handlers

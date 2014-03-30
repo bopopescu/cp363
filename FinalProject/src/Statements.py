@@ -222,6 +222,7 @@ INSERT['HasCustomer'] = (
 INSERT['CustomerPurchases'] = (
     "INSERT INTO `CarCompany`.`CustomerPurchases` (`cid`, `vin`)"
     "    VALUES (%s, %s)")
+
 DELETE = {}
 DELETE['Employee'] =(
     "DELETE FROM `CarCompany`.`Employee`"
@@ -229,15 +230,37 @@ DELETE['Employee'] =(
 DELETE['Expenses'] = (
     "DELETE FROM `CarCompany`.`Expenses`"
     "    WHERE `xid`=%s")
+DELETE['UpdateExpense'] = (
+    "DELETE FROM `CarCompany`.`UpdateExpenses`"
+    "    WHERE `xid`=%s")
+
 SELECT = {}
+SELECT['Cars'] = (
+    "SELECT * FROM `CarCompany`.`Cars`"
+    "    WHERE `vin`=%s")
+SELECT['Customers'] = (
+    "SELECT * FROM `CarCompany`.`Customer`"
+    "    WHERE `cid`=%s")
+
 SEARCH = {}
 SEARCH['Cars'] = (
     "SELECT * FROM `CarCompany`.`Cars`"
     "    WHERE `vin` LIKE %s OR `make` LIKE %s OR `model` LIKE %s")
+SEARCH['Customer'] = (
+    "SELECT * FROM `CarCompany`.`Customer`"
+    "    WHERE `ename` LIKE %s")
+SEARCH['Expenses'] = (
+    "SELECT * FROM `CarCompany`.`Expenses`"
+    "    WHERE `date` LIKE %s OR `details` LIKE %s")
+SEARCH['CustomerPurchases'] = (
+    "SELECT * FROM `CarCompany`.`CustomerPurchases`"
+    "    WHERE `vin` LIKE %s")
+
 USER_LOGIN = (
     "SELECT * FROM `CarCompany`.`Employee` WHERE `eid`=("
     "    SELECT `eid` FROM `CarCompany`.`Logins` WHERE `username`=%s AND `password`=%s LIMIT 1"
     ")")
+
 SELL_CAR = (
     "UPDATE `CarCompany`.`Cars`"
     "SET `sold`=%s"

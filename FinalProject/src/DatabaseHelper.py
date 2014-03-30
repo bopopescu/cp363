@@ -77,14 +77,14 @@ def addEmployee(cnx, newuser):
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['Login'], newuser.toTuple())
     return
 def addExpense(cnx, ex, user):
-    ex_id = SQLInsertGetId(cnx, Statements.INSERT['Expenses'], ex.toTuple())
+    ex_id = SQLInsertGetId(cnx, Statements.INSERT['Expenses'], ex.toTuple()[1:])
     if ex_id != -1:
         ex.setId(ex_id)
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateExpenses'], (ex.getId(), user.getEmployee().getId()))
     return
 # remove entites
 def removeEmployee(cnx, empid):
-    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid))
+    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid,))
     return
 # get entities
 def getAccount(cnx, u, p):

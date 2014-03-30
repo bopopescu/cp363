@@ -7,7 +7,7 @@ import getpass
 import os
 import DatabaseHelper
 import time
-from Entities import *
+from Entities import Car, Customer, Employee, Expense, Sale, Supplier, User
 
 PROG_HEADER = """Used Car Dealer
 Version 1.0 Created in 2014
@@ -24,6 +24,10 @@ MANAGE_SALES_MENU = ["Add sale","Return to previous"]
 # screen clear
 def clear():
     os.system('cls')
+    print(PROG_HEADER)
+    return
+def cls():
+    os.system('cls')
     return
 
 # account login
@@ -34,7 +38,6 @@ def login(cnx):
     go = True
     while user is None and go:
         clear()
-        print(PROG_HEADER)
         u = input("Username: ")
         p = getpass.getpass("Password: ")
         user = DatabaseHelper.getAccount(cnx, u, p)
@@ -44,7 +47,6 @@ def login(cnx):
 
 # entity creators
 def newCar(cnx, user):
-    print(PROG_HEADER)
     print("Please enter the following details for the car")
     vin = input("Vehicle Identification Number(VIN):\n").upper()
     make = input("Make: ").upper()
@@ -118,8 +120,7 @@ SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),(
 def search(cnx, user):
     run = True
     while run == True:
-        clear()
-        print(PROG_HEADER)     
+        clear()    
         print("Please choose from the following options:")
         for j in range(len(SEARCH_MENU)):
             print("{}) {}".format(j+1, SEARCH_MENU[j][0]))
@@ -130,13 +131,13 @@ def search(cnx, user):
                 run = False
             else:
                 SEARCH_MENU[i-1][1](cnx,user)
+                input("Press enter to return to the previous menu ")
     return
 
 def manageCarsSelection(cnx, user):
     run = True
     while run == True:
         clear()
-        print(PROG_HEADER)     
         print("Please choose from the following options:")
         for j in range(len(MANAGE_CARS_MENU)):
             print("{}) {}".format(j+1, MANAGE_CARS_MENU[j]))
@@ -156,8 +157,7 @@ def manageCarsSelection(cnx, user):
 def deleteCarSelection(cnx, user):
     run = True
     while run == True:
-        clear()
-        print(PROG_HEADER)     
+        clear()     
         print("Please choose from the following options:")
         for j in range(len(DELETE_CARS_MENU)):
             print("{}) {}".format(j+1, DELETE_CARS_MENU[j]))
@@ -177,7 +177,6 @@ def manageEmployeesSelection(cnx, user):
     run = True
     while run == True:
         clear()
-        print(PROG_HEADER)     
         print("Please choose from the following options:")
         for j in range(len(MANAGE_EMPLOYEES_MENU)):
             print("{}) {}".format(j+1, MANAGE_EMPLOYEES_MENU[j]))
@@ -195,7 +194,6 @@ def manageEmployeesSelection(cnx, user):
     return
 
 def newEmployee(cnx,user):
-    print(PROG_HEADER)
     print("Please enter the following details for the Employee")
     
             
@@ -244,7 +242,6 @@ def newEmployee(cnx,user):
     return
 
 def deleteEmployee(cnx,user):
-    print(PROG_HEADER)
     print("Please enter the id of the employee to remove")
     
     eid = 0
@@ -269,7 +266,6 @@ def manageExpensesSelection(cnx, user):
     run = True
     while run == True:
         clear()
-        print(PROG_HEADER)     
         print("Please choose from the following options:")
         for j in range(len(MANAGE_EXPENSES_MENU)):
             print("{}) {}".format(j+1, MANAGE_EXPENSES_MENU[j]))
@@ -287,7 +283,6 @@ def manageExpensesSelection(cnx, user):
     return
 
 def newExpense(cnx,user):
-    print(PROG_HEADER)
     print("Please enter the following details for the Expense")
     
     date = time.strftime("%d/%m/%Y")
@@ -316,7 +311,6 @@ def newExpense(cnx,user):
     return
 
 def updateExpense(cnx,user):
-    print(PROG_HEADER)
     print("Please enter the id of the expense to update")
     
     xid = 0
@@ -335,8 +329,7 @@ def updateExpense(cnx,user):
 def manageSalesSelection(cnx, user):
     run = True
     while run == True:
-        clear()
-        print(PROG_HEADER)     
+        clear()    
         print("Please choose from the following options:")
         for j in range(len(MANAGE_SALES_MENU)):
             print("{}) {}".format(j+1, MANAGE_SALES_MENU[j]))
@@ -351,7 +344,6 @@ def manageSalesSelection(cnx, user):
     return
 
 def newSale(cnx,user):
-    print(PROG_HEADER)
     print("Please enter the following details for the Sale")
     
     while True:
@@ -360,7 +352,6 @@ def newSale(cnx,user):
             c = newCustomer(cnx,user)
             if c != None:
                 clear()
-                print(PROG_HEADER)
                 print("Please enter the following details for the Sale")
                 break
         elif exist == "N":
@@ -390,7 +381,6 @@ def newSale(cnx,user):
 
 def newCustomer(cnx,user):
     clear()
-    print(PROG_HEADER)
     print("Please enter the following details for the new Customer")
                
     cname = input("Customer name: ")
@@ -410,6 +400,5 @@ def newCustomer(cnx,user):
         return None
     
 def profitSummary(cnx,user):
-    print(PROG_HEADER)
     input("Your profit Summary")
     return

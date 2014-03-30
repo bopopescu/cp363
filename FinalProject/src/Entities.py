@@ -41,7 +41,7 @@ class Car:
         COLOUR: {}
         SOLD: {}
         PRICE: ${}
-        """.format(self._cId, self._cName, self._joinDate, self._phone)
+        """.format(self._vin, self._make, self._model, self._year, self._colour, self._sold, self._price)
         return result
 
 class Customer:

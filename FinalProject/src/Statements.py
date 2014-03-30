@@ -245,16 +245,22 @@ SELECT['Customers'] = (
 SEARCH = {}
 SEARCH['Cars'] = (
     "SELECT * FROM `CarCompany`.`Cars`"
-    "    WHERE `vin` LIKE %s OR `make` LIKE %s OR `model` LIKE %s")
+    "    WHERE `vin` LIKE %s"
+    "    OR `make` LIKE %s"
+    "    OR `model` LIKE %s")
 SEARCH['Customer'] = (
     "SELECT * FROM `CarCompany`.`Customer`"
     "    WHERE `ename` LIKE %s")
 SEARCH['Expenses'] = (
     "SELECT * FROM `CarCompany`.`Expenses`"
-    "    WHERE `date` LIKE %s OR `details` LIKE %s")
+    "    WHERE `date` LIKE %s"
+    "    OR `details` LIKE %s")
 SEARCH['CustomerPurchases'] = (
     "SELECT * FROM `CarCompany`.`CustomerPurchases`"
     "    WHERE `vin` LIKE %s")
+SEARCH['Employee'] = (
+    "SELECT * FROM `CarCompany`.`Employee`"
+    "    WHERE `ename` LIKE %s")
 
 USER_LOGIN = (
     "SELECT * FROM `CarCompany`.`Employee` WHERE `eid`=("

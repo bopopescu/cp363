@@ -17,7 +17,6 @@ def main():
         run = True
         while run:
             clear()
-            print(PROG_HEADER)
             print("Welcome, {}!".format(user.getEmployee().getName()))
             if user.getEmployee().isManager():
                 i = managerSelection()
@@ -38,7 +37,7 @@ def main():
                     clear()
                     SALES_MENU[i-1][1](con, user)
     DatabaseHelper.close(con)
-    clear()
+    cls()
     return
 
 def managerSelection():

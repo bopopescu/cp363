@@ -115,7 +115,7 @@ def searchCars(cnx, query):
     # wild card search to increase number of records
     query = '%' + query + '%'
     params = 3
-    q = (query for i in range(params))
+    q = tuple([query for i in range(params)])
     r = SQLSelect(cnx, Statements.SEARCH['Cars'], q)
     for i in range(len(r)):
         if len(r[i]) == 7:
@@ -124,7 +124,7 @@ def searchCars(cnx, query):
 def searchEmployees(cnx, query):
     # wild card search to increase number of records
     query = '%' + query + '%'
-    r = SQLSelect(cnx, Statements.SEARCH['Cars'], (query,))
+    r = SQLSelect(cnx, Statements.SEARCH['Employee'], (query,))
     for i in range(len(r)):
         if len(r[i]) == 7:
             r[i] = Employee(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
@@ -133,11 +133,11 @@ def searchExpenses(cnx, query):
     # wild card search to increase number of records
     query = '%' + query + '%'
     params = 2
-    q = (query for i in range(params))
+    q = tuple([query for i in range(params)])
     r = SQLSelect(cnx, Statements.SEARCH['Expenses'], q)
     for i in range(len(r)):
-        if len(r[i]) == 7:
-            r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+        if len(r[i]) == 4:
+            r[i] = Expense(r[i][0], r[i][1], r[i][2], r[i][3])
     return r
 def searchSales(cnx, query):
     # wild card search to increase number of records
@@ -149,7 +149,7 @@ def searchSales(cnx, query):
         if len(cust) == 1 and len(car) == 1:
             r[i] = Sale(cust[0], car[0])
     return r
-    
+
 # generic statement handlers
 def SQLDeleteInsertUpdate(cnx, stmt, values):
     print(stmt)

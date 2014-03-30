@@ -233,12 +233,14 @@ def newEmployee(cnx,user):
     e = Employee(eid,name,salary,dateEmployed,None,isManager,mid)
     user = User(username, password, e)
 
-    
-    clear()
-    DatabaseHelper.addEmployee(cnx, user)
-    print("Employee successfully added.")
-    input("Please press enter to continue.")
-    
+    try:
+        clear()
+        DatabaseHelper.addEmployee(cnx, user)
+        print("Employee successfully added.")
+        input("Please press enter to continue.")
+    except:
+        print("Could not add employee.")
+        input("Please press enter to continue.")
         
     return
 

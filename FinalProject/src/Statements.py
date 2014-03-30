@@ -222,6 +222,10 @@ INSERT['HasCustomer'] = (
 INSERT['CustomerPurchases'] = (
     "INSERT INTO `CarCompany`.`CustomerPurchases` (`cid`, `vin`)"
     "    VALUES (%s, %s)")
+DELETE = {}
+DELETE['Employee'] =(
+    "DELETE FROM `CarCompany`.`Employee`"
+    "    WHERE `eid`=%s")
 USER_LOGIN = (
     "SELECT * FROM `CarCompany`.`Employee` WHERE `eid`=("
     "    SELECT `eid` FROM `CarCompany`.`Logins` WHERE `username`=%s AND `password`=%s LIMIT 1"

@@ -60,22 +60,31 @@ def createTables(cnx):
 
 # add entities
 def addCar(cnx, car, user):
-    SQLInsert(cnx, Statements.INSERT['Cars'], car.toTuple())
-    SQLInsert(cnx, Statements.INSERT['UpdateCars'], (user.getEmployee().getId(), car.getVin(), date.today(), 'Added Vehicle'))
+    SQLDeleteInsertUpdate(cnx, Statements.INSERT['Cars'], car.toTuple())
+    SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateCars'], (user.getEmployee().getId(), car.getVin(), date.today(), 'Added Vehicle'))
     return
 def addCustomer(cnx, customer, user):
     cust_id = SQLInsertGetId(cnx, Statements.INSERT['Customer'], customer.toTuple()[1:])
     if cust_id != -1:
         customer.setId(cust_id)
-        SQLInsert(cnx, Statements.INSERT['HasCustomer'], (user.getId(), customer.getId(), date.today(), 'New Customer'))
+        SQLDeleteInsertUpdate(cnx, Statements.INSERT['HasCustomer'], (user.getId(), customer.getId(), date.today(), 'New Customer'))
     return
 def addEmployee(cnx, newuser):
     employee = newuser.getEmployee()
     emp_id = SQLInsertGetId(cnx, Statements.INSERT['Employee'], employee.toTuple()[1:])
     if emp_id != -1:
         newuser.getEmployee().setId(emp_id)
-        SQLInsert(cnx, Statements.INSERT['Login'], newuser.toTuple())
+        SQLDeleteInsertUpdate(cnx, Statements.INSERT['Login'], newuser.toTuple())
     return
+def addExpense(cnx, ex, user):
+    ex_id = SQLInsertGetId(cnx, Statements.INSERT['Expenses'], ex.toTuple())
+    if ex_id != -1:
+        ex.setId(ex_id)
+        SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateExpenses'], (ex.getId(), user.getEmployee().getId()))
+    return
+# remove entites
+def removeEmployee(cnx, empid):
+    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid))
 # get entities
 def getAccount(cnx, u, p):
     cursor = cnx.cursor()
@@ -86,7 +95,7 @@ def getAccount(cnx, u, p):
         user = User(u, p, e)
     cursor.close()
     return user
-def SQLInsert(cnx, stmt, values):
+def SQLDeleteInsertUpdate(cnx, stmt, values):
     print(stmt)
     print(values)
     cursor = cnx.cursor()

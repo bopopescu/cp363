@@ -55,7 +55,7 @@ TABLES['Cars'] = (
     "ENGINE = InnoDB")
 TABLES['UpdateCars'] = (
     "CREATE TABLE IF NOT EXISTS `CarCompany`.`UpdateCars` ("
-    "`ucid INT NOT NULL AUTO_INCREMENT`"
+    "`ucid` INT NOT NULL AUTO_INCREMENT,"
     "`eid` INT NOT NULL,"
     "`vin` VARCHAR(20) NOT NULL,"
     "`date` VARCHAR(45) NULL,"

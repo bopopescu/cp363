@@ -99,7 +99,16 @@ def getAccount(cnx, u, p):
             e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1, c[6])
             user = User(u, p, e)
     return user
-
+def searchCars(cnx, query):
+    # wild card search to increase number of records
+    query = '%' + query + '%'
+    params = 3
+    q = (query for i in range(params))
+    r = SQLSelect(cnx, Statements.SEARCH['Cars'], q)
+    for i in range(len(r)):
+        r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+    return r
+    
 # generic statement handlers
 def SQLDeleteInsertUpdate(cnx, stmt, values):
     print(stmt)

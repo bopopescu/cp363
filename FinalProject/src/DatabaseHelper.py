@@ -82,7 +82,7 @@ def getAccount(cnx, u, p):
     cursor.execute(Statements.USER_LOGIN, (u, p))
     user = None
     for c in cursor:
-        e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1)
+        e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1, c[6])
         user = User(u, p, e)
     cursor.close()
     return user

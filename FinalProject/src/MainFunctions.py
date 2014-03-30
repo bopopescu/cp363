@@ -239,6 +239,25 @@ def newEmployee(cnx,user):
     return
 
 def deleteEmployee(cnx,user):
+    print(PROG_HEADER)
+    print("Please enter the id of the employee to remove")
+    
+    eid = 0
+    while eid < 1:
+        try:
+            eid = int(input("Employee id: "))
+        except:
+            print("Invalid employee id")
+            eid = 0
+    try:
+        clear()
+        DatabaseHelper.removeEmployee(cnx, eid)
+        print("Employee successfully removed")
+        input("Please press enter to continue.")
+    except:
+        print("Could not remove employee.")
+        input("Please press enter to continue.")
+        
     return
 
 def manageExpensesSelection(cnx, user):
@@ -254,15 +273,41 @@ def manageExpensesSelection(cnx, user):
             i = int(i)
             if i == 1:
                 clear()
-                newEmployee(cnx,user)
+                newExpense(cnx,user)
             elif i == 2:
                 clear()
-                deleteEmployee(cnx,user)
+                deleteExpense(cnx,user)
             elif i == 3:
                 run = False
     return
 
 def newExpense(cnx,user):
+    print(PROG_HEADER)
+    print("Please enter the following details for the Expense")
+    
+    date = time.strftime("%d/%m/%Y")
+    
+    cost = -1
+    while cost < 0:
+        try:
+            cost = int(input("Cost of expense: "))
+        except:
+            print("Invalid cost")
+            cost = -1
+            
+    details = input("Enter the details of the expense: \n")
+    
+    e = Expense(0,date,cost,details)
+
+    try:
+        clear()
+        DatabaseHelper.addExpense(cnx, e,user)
+        print("Expense successfully added.")
+        input("Please press enter to continue.")
+    except:
+        print("Could not add expense.")
+        input("Please press enter to continue.")
+        
     return
 
 def deleteExpense(cnx,user):

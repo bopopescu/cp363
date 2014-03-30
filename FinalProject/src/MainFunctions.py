@@ -189,6 +189,57 @@ def manageEmployeesSelection(cnx, user):
     return
 
 def newEmployee(cnx,user):
+    print(PROG_HEADER)
+    print("Please enter the following details for the Employee")
+    
+    eid = 0
+    while eid < 1:
+        try:
+            eid = int(input("Employee id:\n"))
+        except:
+            print("Invalid employee id")
+            eid = 0
+            
+    name = input("Full Name:\n")
+    
+    salary = 0
+    while salary < 1:
+        try:
+            salary = int(input("Salary:\n"))
+        except:
+            print("Invalid employee id")
+            eid = 0
+    dateEmployed = input("Employment Date\n")
+    
+    while True:
+        isManager = input("Is employee a manager?(Y/N): \n").upper()
+        if isManager == "Y":
+            isManager = True
+            break
+        elif isManager == "N":
+            isManager = False
+            break
+            
+    mid = 0
+    while mid < 1:
+        try:
+            mid = int(input("Manager id:\n"))
+        except:
+            print("Invalid manager id")
+            eid = 0
+            
+    username = input("Username: \n")
+    password = input("Password: \n")        
+    e = Employee(eid,name,salary,dateEmployed,"",isManager,mid)
+    user = User(username, password, e)
+    try:
+        clear()
+        DatabaseHelper.addEmployee(cnx, user)
+        print("Employee successfully added.")
+        input("Please press enter to continue.")
+    except:
+        print("Could not add Employee")
+        input("Please press enter to continue.")
     return
 
 def deleteEmployee(cnx,user):

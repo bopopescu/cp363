@@ -52,7 +52,7 @@ def newCar(cnx, user):
         try:
             year = int(input("Year: "))
         except:
-            print("Invalid year, please enter a valid year >= 1900")
+            print("Invalid year, please enter a valid year > 1900")
             year = 0
     colour = input("Colour: ").upper()
     sold = False

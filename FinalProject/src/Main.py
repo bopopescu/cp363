@@ -6,7 +6,7 @@ Created on 2014-03-25
 from MainFunctions import *
 
 # menus and main
-MANAGER_MENU = (("Manage Cars",manageCarsSelection), ("Manage Employees",manageEmployeesSelection), ("Manage Expenses",manageExpensesSelection), ("Manage Sales",manageSalesSelection),("Search", managerSearch), ("Profit Summary",profitSummary), ("Exit",None))
+MANAGER_MENU = (("Manage Cars",manageCarsSelection), ("Manage Employees",manageEmployeesSelection), ("Manage Expenses",manageExpensesSelection), ("Manage Sales",manageSalesSelection), ("Profit Summary",profitSummary), ("Exit",None))
 SALES_MENU = (("Add Cars", newCar), ("Make a Sale", newSale), ("Car Detail Search", regularSearch), ("Exit", None))
 
 def main():

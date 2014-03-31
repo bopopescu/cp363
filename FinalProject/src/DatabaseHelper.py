@@ -57,9 +57,11 @@ def createTables(cnx):
     return
 
 # add entities
-def addCar(cnx, car, user):
+def addCar(cnx, car, supplier, user):
     SQLDeleteInsertUpdate(cnx, Statements.INSERT['Cars'], car.toTuple())
     SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateCars'], (user.getEmployee().getId(), car.getVin(), date.today(), 'Added Vehicle'))
+    SQLDeleteInsertUpdate(cnx, Statements.INSERT['CarSupply'], ( supplier.getId(),car.getVin(), date.today()))
+    
     return
 def addCustomer(cnx, customer, user):
     cust_id = SQLInsertGetId(cnx, Statements.INSERT['Customer'], customer.toTuple()[1:])

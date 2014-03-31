@@ -6,7 +6,7 @@ Created on 2014-03-26
 import getpass
 import os
 import DatabaseHelper
-import time
+from datetime import date
 from Entities import Car, Customer, Employee, Expense, Sale, Supplier, User
 
 PROG_HEADER = """Used Car Dealer
@@ -63,10 +63,35 @@ def newCar(cnx, user):
         except:
             print("Invalid price, please enter a valid price > 0")
             price = 0
-    c = Car(vin, make, model, year, colour, sold, price)
-    DatabaseHelper.addCar(cnx, c, user)
+    car = Car(vin, make, model, year, colour, sold, price)
+
+    while True:
+        try:
+            suppliers = DatabaseHelper.searchSuppliers(cnx, input("Supplier: "))
+            length = len(suppliers)
+            if length == 0:
+                print("Could not find supplier. Try again.")
+            elif length == 1:
+                supplier = suppliers[0]
+                break
+            else:
+                print("\nFound suppliers: ")
+                for i in range(length):
+                    print("Result {}".format(i+1))
+                    print(suppliers[i])
+                index = -1
+                while index < 0:
+                    index = int(input("Select supplier by result number: ")) - 1
+                    if index > length -1 or index <0:
+                        index = -1
+                        print("Index out of bounds. Try again.")
+                supplier = suppliers[index]
+                break
+        except:
+            print("Could not find supplier. Try again.")
+    
     try:
-        
+        DatabaseHelper.addCar(cnx, car,supplier, user)
         print("Car successfully added.")
         input("Please press enter to continue.")
     except:
@@ -88,7 +113,7 @@ def newEmployee(cnx,user):
         except:
             print("Invalid salary")
             
-    dateEmployed = time.strftime("%d/%m/%Y")
+    dateEmployed = date.today()
     
     while True:
         isManager = input("Is employee a manager?(Y/N): ").upper()
@@ -149,7 +174,7 @@ def newExpense(cnx,user):
     clear()
     print("Please enter the following details for the Expense")
     
-    date = time.strftime("%d/%m/%Y")
+    date = date.today()
     
     cost = -1
     while cost < 0:
@@ -233,7 +258,7 @@ def newCustomer(cnx,user):
     print("Please enter the following details for the new Customer")
                
     cname = input("Customer name: ")
-    join_date = time.strftime("%d/%m/%Y")
+    join_date = date.today()
     phone = input("Phone number: ")
     
     customer = Customer(0,cname,join_date,phone)
@@ -263,7 +288,7 @@ def newSupplier(cnx,user):
     supplier = Supplier(0,sname,phone,street,city,province,country,postalCode)
     try:
         clear()
-        DatabaseHelper.addSupplier(cnx, supplier,time.strftime("%d/%m/%Y"), user)
+        DatabaseHelper.addSupplier(cnx, supplier,date.today(), user)
         print("Supplier successfully created")
         input("Please press enter to continue.")
 

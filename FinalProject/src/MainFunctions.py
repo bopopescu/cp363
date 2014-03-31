@@ -14,12 +14,7 @@ Version 1.0 Created in 2014
 Bryan Chau & Mohamed Mohamedtaki
 CP363 Database I
 """
-MANAGE_CARS_MENU = ["Add car","Remove car","Return to previous"]
 DELETE_CARS_MENU = ["Find cars","Remove car by VIN","Return to previous"]
-MANAGE_EMPLOYEES_MENU = ["Add employee", "Remove employee","Return to previous"]
-MANAGE_EXPENSES_MENU = ["Add expense", "Update expense","Return to previous"]
-MANAGE_SALES_MENU = ["Add sale","Return to previous"]
-
 
 # screen clear
 def clear():
@@ -45,8 +40,9 @@ def login(cnx):
             go = input("Invalid username/password combination. Retry?(Y/N) ").upper() == 'Y'
     return user
 
-# entity creators
+# entity creators/deleters/updaters
 def newCar(cnx, user):
+    clear()
     print("Please enter the following details for the car")
     vin = input("Vehicle Identification Number(VIN):\n").upper()
     make = input("Make: ").upper()
@@ -78,137 +74,8 @@ def newCar(cnx, user):
         input("Please press enter to continue.")
     return
 
-#Search Functions
-def searchCars(cnx,user):
-    clear()
-    s = input("Enter a search query:")
-    r = DatabaseHelper.searchCars(cnx, s)
-    for i in range(len(r)):
-        print(r[i])
-    return
-
-
-
-def searchEmployees(cnx,user):
-    clear()
-    s = input("Enter a search query:")
-    r = DatabaseHelper.searchEmployees(cnx, s)
-    for i in range(len(r)):
-        print(r[i])
-    
-    return
-
-def searchSales(cnx,user):
-    clear()
-    s = input("Enter a search query:")
-    r = DatabaseHelper.searchSales(cnx, s)
-    for i in range(len(r)):
-        print(r[i])
-    
-    return
-
-def searchExpenses(cnx,user):
-    clear()
-    s = input("Enter a search query:")
-    r = DatabaseHelper.searchExpenses(cnx, s)
-    for i in range(len(r)):
-        print(r[i])
-    return 
-
-SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
-
-def managerSearch(cnx, user):
-    run = True
-    while run == True:
-        clear()    
-        print("Please choose from the following options:")
-        for j in range(len(SEARCH_MENU)):
-            print("{}) {}".format(j+1, SEARCH_MENU[j][0]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == len(SEARCH_MENU):
-                run = False
-            else:
-                cont = True
-                while cont:
-                    SEARCH_MENU[i-1][1](cnx,user)
-                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
-                        cont = False
-    return
-
-def regularSearch(cnx, user):
-    cont = True
-    while cont:
-        searchCars(cnx,user)
-        if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
-            cont = False
-    return
-
-def manageCarsSelection(cnx, user):
-    run = True
-    while run == True:
-        clear()
-        print("Please choose from the following options:")
-        for j in range(len(MANAGE_CARS_MENU)):
-            print("{}) {}".format(j+1, MANAGE_CARS_MENU[j]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == 1:
-                clear()
-                newCar(cnx,user)
-            elif i == 2:
-                clear()
-                deleteCarSelection(cnx,user)
-            elif i == 3:
-                run = False
-    return
-
-def deleteCarSelection(cnx, user):
-    run = True
-    while run == True:
-        clear()     
-        print("Please choose from the following options:")
-        for j in range(len(DELETE_CARS_MENU)):
-            print("{}) {}".format(j+1, DELETE_CARS_MENU[j]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == 1:
-                clear()
-                cont = True
-                while cont:
-                    searchCars(cnx,user)
-                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
-                        cont = False
-            if i == 2:
-                clear()
-            elif i == 3:
-                run = False
-    return
-
-def manageEmployeesSelection(cnx, user):
-    run = True
-    while run == True:
-        clear()
-        print("Please choose from the following options:")
-        for j in range(len(MANAGE_EMPLOYEES_MENU)):
-            print("{}) {}".format(j+1, MANAGE_EMPLOYEES_MENU[j]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == 1:
-                clear()
-                newEmployee(cnx,user)
-            elif i == 2:
-                clear()
-                deleteEmployee(cnx,user)
-            elif i == 3:
-                run = False
-    return
-
 def newEmployee(cnx,user):
+    clear()
     print("Please enter the following details for the Employee")
     
             
@@ -257,6 +124,7 @@ def newEmployee(cnx,user):
     return
 
 def deleteEmployee(cnx,user):
+    clear()
     print("Please enter the id of the employee to remove")
     
     eid = 0
@@ -277,27 +145,8 @@ def deleteEmployee(cnx,user):
         
     return
 
-def manageExpensesSelection(cnx, user):
-    run = True
-    while run == True:
-        clear()
-        print("Please choose from the following options:")
-        for j in range(len(MANAGE_EXPENSES_MENU)):
-            print("{}) {}".format(j+1, MANAGE_EXPENSES_MENU[j]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == 1:
-                clear()
-                newExpense(cnx,user)
-            elif i == 2:
-                clear()
-                updateExpense(cnx,user)
-            elif i == 3:
-                run = False
-    return
-
 def newExpense(cnx,user):
+    clear()
     print("Please enter the following details for the Expense")
     
     date = time.strftime("%d/%m/%Y")
@@ -326,6 +175,7 @@ def newExpense(cnx,user):
     return
 
 def updateExpense(cnx,user):
+    clear()
     print("Please enter the id of the expense to update")
     
     xid = 0
@@ -341,24 +191,8 @@ def updateExpense(cnx,user):
         
     return
 
-def manageSalesSelection(cnx, user):
-    run = True
-    while run == True:
-        clear()    
-        print("Please choose from the following options:")
-        for j in range(len(MANAGE_SALES_MENU)):
-            print("{}) {}".format(j+1, MANAGE_SALES_MENU[j]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == 1:
-                clear()
-                newSale(cnx,user)
-            elif i == 2:
-                run = False
-    return
-
 def newSale(cnx,user):
+    clear()
     print("Please enter the following details for the Sale")
     
     while True:
@@ -413,6 +247,176 @@ def newCustomer(cnx,user):
         print("Could not create customer")
         input("Please press enter to continue.")
         return None
+
+#Search Functions
+def searchCars(cnx,user):
+    cont = True
+    while cont:
+        clear()
+        s = input("Enter a search query:")
+        r = DatabaseHelper.searchCars(cnx, s)
+        print("\nYour Search returned {} result(s).".format(len(r)))
+        for i in range(len(r)):
+            print(r[i])
+        if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+            cont = False
+    return
+
+def searchEmployees(cnx,user):
+    cont = True
+    while cont:
+        clear()
+        s = input("Enter a search query:")
+        r = DatabaseHelper.searchEmployees(cnx, s)
+        for i in range(len(r)):
+            print(r[i])
+        if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+            cont = False
+    return
+
+def searchSales(cnx,user):
+    cont = True
+    while cont:
+        clear()
+        s = input("Enter a search query:")
+        r = DatabaseHelper.searchSales(cnx, s)
+        for i in range(len(r)):
+            print(r[i])
+        if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+            cont = False
+    return
+
+def searchExpenses(cnx,user):
+    cont = True
+    while cont:
+        clear()
+        s = input("Enter a search query:")
+        r = DatabaseHelper.searchExpenses(cnx, s)
+        for i in range(len(r)):
+            print(r[i])
+        if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+            cont = False
+    return 
+
+SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
+
+def managerSearch(cnx, user):
+    run = True
+    while run == True:
+        clear()    
+        print("Please choose from the following options:")
+        for j in range(len(SEARCH_MENU)):
+            print("{}) {}".format(j+1, SEARCH_MENU[j][0]))
+        i = input("Selection(number from above): ")
+        if i.isdigit():
+            i = int(i)
+            if i == len(SEARCH_MENU):
+                run = False
+            else:
+                cont = True
+                while cont:
+                    SEARCH_MENU[i-1][1](cnx,user)
+                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+                        cont = False
+    return
+
+def regularSearch(cnx, user):
+    
+    searchCars(cnx,user)
+    return
+
+def deleteCarSelection(cnx, user):
+    run = True
+    while run == True:
+        clear()     
+        print("Please choose from the following options:")
+        for j in range(len(DELETE_CARS_MENU)):
+            print("{}) {}".format(j+1, DELETE_CARS_MENU[j]))
+        i = input("Selection(number from above): ")
+        if i.isdigit():
+            i = int(i)
+            if i == 1:
+                clear()
+                cont = True
+                while cont:
+                    searchCars(cnx,user)
+                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+                        cont = False
+            if i == 2:
+                clear()
+            elif i == 3:
+                run = False
+    return
+
+MANAGE_CARS_MENU = (("Add car",newCar),("Remove car",deleteCarSelection),("Search cars",searchCars),("Return to previous",None))
+def manageCarsSelection(cnx, user):
+    run = True
+    while run == True:
+        clear()
+        print("Please choose from the following options:")
+        for j in range(len(MANAGE_CARS_MENU)):
+            print("{}) {}".format(j+1, MANAGE_CARS_MENU[j][0]))
+        i = input("Selection(number from above): ")
+        
+        if i.isdigit():
+            i = int(i)
+            if i == len(MANAGE_CARS_MENU):
+                run = False
+            else:
+                MANAGE_CARS_MENU[i-1][1](cnx,user)
+    return
+
+MANAGE_EMPLOYEES_MENU = (("Add employee",newEmployee), ("Remove employee",deleteEmployee),("Search employees",searchEmployees),("Return to previous",None))
+def manageEmployeesSelection(cnx, user):
+    run = True
+    while run == True:
+        clear()
+        print("Please choose from the following options:")
+        for j in range(len(MANAGE_EMPLOYEES_MENU)):
+            print("{}) {}".format(j+1, MANAGE_EMPLOYEES_MENU[j][0]))
+        i = input("Selection(number from above): ")
+        if i.isdigit():
+            i = int(i)
+            if i == len(MANAGE_EMPLOYEES_MENU):
+                run = False
+            else:
+                MANAGE_EMPLOYEES_MENU[i-1][1](cnx,user)    
+    return
+
+
+MANAGE_EXPENSES_MENU = (("Add expense",newExpense), ("Update expense",updateExpense),("Return to previous",None))
+def manageExpensesSelection(cnx, user):
+    run = True
+    while run == True:
+        clear()
+        print("Please choose from the following options:")
+        for j in range(len(MANAGE_EXPENSES_MENU)):
+            print("{}) {}".format(j+1, MANAGE_EXPENSES_MENU[j][0]))
+        i = input("Selection(number from above): ")
+        if i.isdigit():
+            i = int(i)
+            if i == len(MANAGE_EXPENSES_MENU):
+                run = False
+            else:
+                MANAGE_EXPENSES_MENU[i-1][1](cnx,user)   
+    return
+
+MANAGE_SALES_MENU = [("Add sale",newSale),("Search Sales",searchSales),("Return to previous",None)]
+def manageSalesSelection(cnx, user):
+    run = True
+    while run == True:
+        clear()    
+        print("Please choose from the following options:")
+        for j in range(len(MANAGE_SALES_MENU)):
+            print("{}) {}".format(j+1, MANAGE_SALES_MENU[j][0]))
+        i = input("Selection(number from above): ")
+        if i.isdigit():
+            i = int(i)
+            if i == len(MANAGE_SALES_MENU):
+                run = False
+            else:
+                MANAGE_SALES_MENU[i-1][1](cnx,user)  
+    return
     
 def profitSummary(cnx,user):
     input("Your profit Summary")

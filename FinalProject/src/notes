@@ -10,3 +10,8 @@ Display customer info and car info. from cid and vin
 
 updateexpenses. do not need to remove expenses (you can remove this sql statement)
 Just need to replace old expense with new expense (ie. Select whatever where xid = oldxid)
+
+need updateCar SQL statement to set sold bit true.
+
+Need to be able to add suppliers
+suppliers table and workswith table

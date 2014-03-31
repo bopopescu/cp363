@@ -261,6 +261,9 @@ SEARCH['CustomerPurchases'] = (
 SEARCH['Employee'] = (
     "SELECT * FROM `CarCompany`.`Employee`"
     "    WHERE `ename` LIKE %s")
+SEARCH['Suppliers'] = (
+    "SELECT * FROM `CarCompany`.`Suppliers`"
+    "    WHERE `sname` LIKE %s")
 
 USER_LOGIN = (
     "SELECT * FROM `CarCompany`.`Employee` WHERE `eid`=("

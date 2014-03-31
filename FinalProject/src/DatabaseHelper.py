@@ -80,6 +80,12 @@ def addExpense(cnx, ex, user):
         ex.setId(ex_id)
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateExpenses'], (ex.getId(), user.getEmployee().getId()))
     return
+def addSupplier(cnx, supplier,date, user):
+    sup_id = SQLInsertGetId(cnx, Statements.INSERT['Suppliers'], supplier.toTuple()[1:])
+    if sup_id != -1:
+        supplier.setId(sup_id)
+        SQLDeleteInsertUpdate(cnx, Statements.INSERT['WorksWith'], (user.getEmployee().getId(), supplier.getId(), date))
+    return
 
 # remove entites
 def removeEmployee(cnx, empid):
@@ -148,6 +154,14 @@ def searchSales(cnx, query):
         car = getCar(cnx, r[i][1])
         if len(cust) == 1 and len(car) == 1:
             r[i] = Sale(cust[0], car[0])
+    return r
+def searchSuppliers(cnx, query):
+    # wild card search to increase number of records
+    query = '%' + query + '%'
+    r = SQLSelect(cnx, Statements.SEARCH['Suppliers'], (query,))
+    for i in range(len(r)):
+        if len(r[i]) == 8:
+            r[i] = Supplier(r[i][0], r[i][1], r[i][2], r[i][4], r[i][5], r[i][6], r[i][7], r[i][3])
     return r
 
 # generic statement handlers

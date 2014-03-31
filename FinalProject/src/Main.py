@@ -6,8 +6,8 @@ Created on 2014-03-25
 from MainFunctions import *
 
 # menus and main
-MANAGER_MENU = (("Manage Cars",manageCarsSelection), ("Manage Employees",manageEmployeesSelection), ("Manage Expenses",manageExpensesSelection), ("Manage Sales",manageSalesSelection), ("Profit Summary",profitSummary), ("Exit",None))
-SALES_MENU = (("Add Cars", newCar), ("Make a Sale", newSale), ("Car Detail Search", regularSearch), ("Exit", None))
+MANAGER_MENU = (("Manage Cars",manageCarsSelection), ("Manage Employees",manageEmployeesSelection), ("Manage Expenses",manageExpensesSelection), ("Manage Sales",manageSalesSelection),("Manage Suppliers",manageSuppliersSelection), ("Profit Summary",profitSummary), ("Exit",None))
+SALES_MENU = (("Add Cars", newCar), ("Make a Sale", newSale), ("Car Detail Search", searchCars), ("Exit", None))
 
 def main():
     con = DatabaseHelper.connect()

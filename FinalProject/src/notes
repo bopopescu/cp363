@@ -15,5 +15,4 @@ Display customer info and car info. from cid and vin
 
 	need updateCar SQL statement to set sold bit true.
 
-	Need to be able to add suppliers (SQL)
-	suppliers table and workswith table
+suppliers table and workswith table

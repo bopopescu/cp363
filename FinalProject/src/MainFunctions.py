@@ -248,6 +248,30 @@ def newCustomer(cnx,user):
         input("Please press enter to continue.")
         return None
 
+def newSupplier(cnx,user):
+    clear()
+    print("Please enter the following details for the new Supplier")
+               
+    sname = input("Supplier name: ")
+    phone = input("Phone number: ")
+    postalCode = input("Postal code: ")
+    street = input("Street: ")
+    city = input("City: ")
+    province = input("Province: ")
+    country = input("Country: ")
+    
+    supplier = Supplier(0,sname,phone,street,city,province,country,postalCode)
+    try:
+        clear()
+        DatabaseHelper.addSupplier(cnx, supplier,time.strftime("%d/%m/%Y"), user)
+        print("Supplier successfully created")
+        input("Please press enter to continue.")
+
+    except:
+        print("Could not create supplier")
+        input("Please press enter to continue.")
+    
+    return
 #Search Functions
 def searchCars(cnx,user):
     cont = True
@@ -298,6 +322,18 @@ def searchExpenses(cnx,user):
             cont = False
     return 
 
+def searchSuppliers(cnx,user):
+    cont = True
+    while cont:
+        clear()
+        s = input("Enter a search query:")
+        r = DatabaseHelper.searchSuppliers(cnx, s)
+        for i in range(len(r)):
+            print(r[i])
+        if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+            cont = False
+    return 
+
 SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
 
 def managerSearch(cnx, user):
@@ -318,11 +354,6 @@ def managerSearch(cnx, user):
                     SEARCH_MENU[i-1][1](cnx,user)
                     if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
                         cont = False
-    return
-
-def regularSearch(cnx, user):
-    
-    searchCars(cnx,user)
     return
 
 def deleteCarSelection(cnx, user):
@@ -417,7 +448,23 @@ def manageSalesSelection(cnx, user):
             else:
                 MANAGE_SALES_MENU[i-1][1](cnx,user)  
     return
-    
+
+MANAGE_SUPPLIERS_MENU = [("Add supplier",newSupplier),("Search Suppliers",searchSuppliers),("Return to previous",None)]
+def manageSuppliersSelection(cnx, user):
+    run = True
+    while run == True:
+        clear()    
+        print("Please choose from the following options:")
+        for j in range(len(MANAGE_SUPPLIERS_MENU)):
+            print("{}) {}".format(j+1, MANAGE_SUPPLIERS_MENU[j][0]))
+        i = input("Selection(number from above): ")
+        if i.isdigit():
+            i = int(i)
+            if i == len(MANAGE_SUPPLIERS_MENU):
+                run = False
+            else:
+                MANAGE_SUPPLIERS_MENU[i-1][1](cnx,user) 
+    return
 def profitSummary(cnx,user):
     input("Your profit Summary")
     return

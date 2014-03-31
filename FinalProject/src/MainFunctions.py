@@ -117,7 +117,7 @@ def searchExpenses(cnx,user):
 
 SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
 
-def search(cnx, user):
+def managerSearch(cnx, user):
     run = True
     while run == True:
         clear()    
@@ -130,8 +130,19 @@ def search(cnx, user):
             if i == len(SEARCH_MENU):
                 run = False
             else:
-                SEARCH_MENU[i-1][1](cnx,user)
-                input("Press enter to return to the previous menu ")
+                cont = True
+                while cont:
+                    SEARCH_MENU[i-1][1](cnx,user)
+                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+                        cont = False
+    return
+
+def regularSearch(cnx, user):
+    cont = True
+    while cont:
+        searchCars(cnx,user)
+        if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+            cont = False
     return
 
 def manageCarsSelection(cnx, user):
@@ -166,7 +177,11 @@ def deleteCarSelection(cnx, user):
             i = int(i)
             if i == 1:
                 clear()
-                search(cnx,user)
+                cont = True
+                while cont:
+                    searchCars(cnx,user)
+                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
+                        cont = False
             if i == 2:
                 clear()
             elif i == 3:
@@ -253,7 +268,7 @@ def deleteEmployee(cnx,user):
             eid = 0
     try:
         clear()
-        DatabaseHelper.removeEmployee(cnx, eid)
+        DatabaseHelper.removeEmployee(cnx, eid) #needs to just set date of departure field.
         print("Employee successfully removed")
         input("Please press enter to continue.")
     except:

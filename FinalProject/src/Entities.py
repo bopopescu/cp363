@@ -34,7 +34,8 @@ class Car:
         return (self._vin, self._make, self._model,\
                 self._year, self._colour, 1 if self._sold else 0, self._price)
     def __str__(self):
-        result = """VIN: {}
+        result = """
+        VIN: {}
         MAKE: {}
         MODEL: {}
         YEAR: {}
@@ -65,7 +66,8 @@ class Customer:
         self._cId = i
         return
     def __str__(self):
-        result = """ID: {}
+        result = """
+        ID: {}
         NAME: {}
         DATE JOINED: {}
         PHONE: {}
@@ -113,7 +115,8 @@ class Employee:
     def getManager(self):
         return self._managerId
     def __str__(self):
-        result = """ID: {}
+        result = """
+        ID: {}
         NAME: {}
         SALARY: ${}
         DATE OF EMPLOYMENT: {}
@@ -146,7 +149,8 @@ class Expense:
         self._xId = i
         return
     def __str__(self):
-        result = """ID: {}
+        result = """
+        ID: {}
         DATE: {}
         COST: ${}
         DETAILS:
@@ -194,7 +198,8 @@ class Supplier:
         self._sId = i
         return
     def __str__(self):
-        result = """ID: {}
+        result = """
+        ID: {}
         NAME: {}
         PHONE: {}
         ADDRESS: {}
@@ -213,10 +218,11 @@ class User:
     def getEmployee(self):
         return self._employee
     def __str__(self):
-        result = """USERNAME: {}
-    ID: {}
-    NAME: {}
-    """.format(self._username, self._employee.getId(), self._employee.getName())
+        result = """
+        USERNAME: {}
+        ID: {}
+        NAME: {}
+        """.format(self._username, self._employee.getId(), self._employee.getName())
         return result
     def toTuple(self):
         return (self._employee.getId(), self._username, self._password)
@@ -230,10 +236,10 @@ class Sale:
     def getcar(self):
         return self._car
     def __str__(self):
-        result = """CUSTOMER NAME: {}
-    CAR DETAILS:
-    {}
-    """.format(self._customer.getName(), self._car)
+        result = """
+        CUSTOMER NAME: {}
+        CAR DETAILS: {}
+        """.format(self._customer.getName(), self._car)
         return result
     def toTuple(self):
         return (self._cid, self._vin)

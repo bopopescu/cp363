@@ -1,0 +1,12 @@
+RemoveEmployee should not actually remove an employee from DB. (please change this)
+It should set the date of departure field in DB.
+
+Put each respective search into its own respective menu page(already existing)
+
+Write profit summary.
+
+Write SQL to insert into Sales
+Display customer info and car info. from cid and vin
+
+updateexpenses. do not need to remove expenses (you can remove this sql statement)
+Just need to replace old expense with new expense (ie. Select whatever where xid = oldxid)

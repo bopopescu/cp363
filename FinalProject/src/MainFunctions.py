@@ -6,7 +6,7 @@ Created on 2014-03-26
 import getpass
 import os
 import DatabaseHelper
-import time
+from datetime import date
 from Entities import Car, Customer, Employee, Expense, Sale, Supplier, User
 
 PROG_HEADER = """Used Car Dealer
@@ -14,7 +14,6 @@ Version 1.0 Created in 2014
 Bryan Chau & Mohamed Mohamedtaki
 CP363 Database I
 """
-DELETE_CARS_MENU = ["Find cars","Remove car by VIN","Return to previous"]
 
 # screen clear
 def clear():
@@ -41,6 +40,10 @@ def login(cnx):
     return user
 
 # entity creators/deleters/updaters
+def profitSummary(cnx,user):
+    input("Your profit Summary")
+    return
+
 def newCar(cnx, user):
     clear()
     print("Please enter the following details for the car")
@@ -52,7 +55,7 @@ def newCar(cnx, user):
         try:
             year = int(input("Year: "))
         except:
-            print("Invalid year, please enter a valid year >= 1900")
+            print("Invalid year, please enter a valid year > 1900")
             year = 0
     colour = input("Colour: ").upper()
     sold = False
@@ -63,10 +66,35 @@ def newCar(cnx, user):
         except:
             print("Invalid price, please enter a valid price > 0")
             price = 0
-    c = Car(vin, make, model, year, colour, sold, price)
-    DatabaseHelper.addCar(cnx, c, user)
+    car = Car(vin, make, model, year, colour, sold, price)
+
+    while True:
+        try:
+            suppliers = DatabaseHelper.searchSuppliers(cnx, input("Supplier: "))
+            length = len(suppliers)
+            if length == 0:
+                print("Could not find supplier. Try again.")
+            elif length == 1:
+                supplier = suppliers[0]
+                break
+            else:
+                print("\nFound suppliers: ")
+                for i in range(length):
+                    print("Result {}".format(i+1))
+                    print(suppliers[i])
+                index = -1
+                while index < 0:
+                    index = int(input("Select supplier by result number: ")) - 1
+                    if index > length -1 or index <0:
+                        index = -1
+                        print("Index out of bounds. Try again.")
+                supplier = suppliers[index]
+                break
+        except:
+            print("Could not find supplier. Try again.")
+    
     try:
-        
+        DatabaseHelper.addCar(cnx, car,supplier, user)
         print("Car successfully added.")
         input("Please press enter to continue.")
     except:
@@ -88,7 +116,7 @@ def newEmployee(cnx,user):
         except:
             print("Invalid salary")
             
-    dateEmployed = time.strftime("%d/%m/%Y")
+    dateEmployed = date.today()
     
     while True:
         isManager = input("Is employee a manager?(Y/N): ").upper()
@@ -123,7 +151,7 @@ def newEmployee(cnx,user):
         
     return
 
-def deleteEmployee(cnx,user):
+def removeEmployee(cnx,user):
     clear()
     print("Please enter the id of the employee to remove")
     
@@ -149,7 +177,7 @@ def newExpense(cnx,user):
     clear()
     print("Please enter the following details for the Expense")
     
-    date = time.strftime("%d/%m/%Y")
+    date = date.today()
     
     cost = -1
     while cost < 0:
@@ -205,22 +233,55 @@ def newSale(cnx,user):
                 break
         elif exist == "N":
             break
-    
-    vin = input("Vehicle Identification Number(VIN):\n").upper()
+    while True:
+        vin = input("Vehicle Identification Number(VIN): ").upper()
+        cars = DatabaseHelper.getCar(cnx, vin)
+        if len(cars) == 0:
+            print("Could not find car with VIN: {}".format(vin))
+        elif len(cars) == 1:
+            break
+        else:
+            print("Found cars:")
+            for i in range(len(cars)):
+                print("Result {}".format(i+1))
+                print(cars[i])
+            index = -1
+            while index < 0:
+                index = int(input("Select car by result number: ")) - 1
+                if index > len(cars) -1 or index <0:
+                    index = -1
+                    print("Index out of bounds. Try again.")
     try:
         cid = c.getId()
     except:
-        cid = 0
-    while cid < 1:
-        try:
-            cid = int(input("Customer id:"))
-        except:
-            print("Invalid customer id")
-            cid = 0
+        while True:
+            cname = input("Customer Name: ")
+            customers = DatabaseHelper.searchCustomers(cnx, cname)
+            if len(customers) == 0:
+                print("Could not find customer with name: {}".format(cname))
+            elif len(customers) == 1:
+                cid = customers[0].getId()
+                break
+            else:
+                print("Found customers:")
+                for i in range(len(customers)):
+                    print("Result {}".format(i+1))
+                    print(customers[i])
+                index = -1
+                while index < 0:
+                    index = int(input("Select customer by result number: ")) - 1
+                    if index > len(customers) -1 or index <0:
+                        index = -1
+                        print("Index out of bounds. Try again.")
+                cid = customers[index].getId()
+                break
+        
+    
     s = Sale(cid,vin)
+    #DatabaseHelper.addSale(cnx, s, user)
     try:
         clear()
-        #DatabaseHelper.addSale(cnx, s, user)
+        
         print("Sale successfully added.")
         input("Please press enter to continue.")
     except:
@@ -233,7 +294,7 @@ def newCustomer(cnx,user):
     print("Please enter the following details for the new Customer")
                
     cname = input("Customer name: ")
-    join_date = time.strftime("%d/%m/%Y")
+    join_date = date.today()
     phone = input("Phone number: ")
     
     customer = Customer(0,cname,join_date,phone)
@@ -263,7 +324,7 @@ def newSupplier(cnx,user):
     supplier = Supplier(0,sname,phone,street,city,province,country,postalCode)
     try:
         clear()
-        DatabaseHelper.addSupplier(cnx, supplier,time.strftime("%d/%m/%Y"), user)
+        DatabaseHelper.addSupplier(cnx, supplier,date.today(), user)
         print("Supplier successfully created")
         input("Please press enter to continue.")
 
@@ -334,52 +395,7 @@ def searchSuppliers(cnx,user):
             cont = False
     return 
 
-SEARCH_MENU = (("Search Cars",searchCars),("Search Employees",searchEmployees),("Search Expenses",searchExpenses),("Search Sales",searchSales),("Return to previous",None))
-
-def managerSearch(cnx, user):
-    run = True
-    while run == True:
-        clear()    
-        print("Please choose from the following options:")
-        for j in range(len(SEARCH_MENU)):
-            print("{}) {}".format(j+1, SEARCH_MENU[j][0]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == len(SEARCH_MENU):
-                run = False
-            else:
-                cont = True
-                while cont:
-                    SEARCH_MENU[i-1][1](cnx,user)
-                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
-                        cont = False
-    return
-
-def deleteCarSelection(cnx, user):
-    run = True
-    while run == True:
-        clear()     
-        print("Please choose from the following options:")
-        for j in range(len(DELETE_CARS_MENU)):
-            print("{}) {}".format(j+1, DELETE_CARS_MENU[j]))
-        i = input("Selection(number from above): ")
-        if i.isdigit():
-            i = int(i)
-            if i == 1:
-                clear()
-                cont = True
-                while cont:
-                    searchCars(cnx,user)
-                    if input("Enter 'Y' to search again. Any other key to return to previous: ").upper() != 'Y':
-                        cont = False
-            if i == 2:
-                clear()
-            elif i == 3:
-                run = False
-    return
-
-MANAGE_CARS_MENU = (("Add car",newCar),("Remove car",deleteCarSelection),("Search cars",searchCars),("Return to previous",None))
+MANAGE_CARS_MENU = (("Add a new car",newCar),("Make a sale",newSale),("Search cars",searchCars),("Return to previous",None))
 def manageCarsSelection(cnx, user):
     run = True
     while run == True:
@@ -397,7 +413,7 @@ def manageCarsSelection(cnx, user):
                 MANAGE_CARS_MENU[i-1][1](cnx,user)
     return
 
-MANAGE_EMPLOYEES_MENU = (("Add employee",newEmployee), ("Remove employee",deleteEmployee),("Search employees",searchEmployees),("Return to previous",None))
+MANAGE_EMPLOYEES_MENU = (("Add employee",newEmployee), ("Remove employee",removeEmployee),("Search employees",searchEmployees),("Return to previous",None))
 def manageEmployeesSelection(cnx, user):
     run = True
     while run == True:
@@ -432,7 +448,7 @@ def manageExpensesSelection(cnx, user):
                 MANAGE_EXPENSES_MENU[i-1][1](cnx,user)   
     return
 
-MANAGE_SALES_MENU = [("Add sale",newSale),("Search Sales",searchSales),("Return to previous",None)]
+MANAGE_SALES_MENU = [("Make a sale",newSale),("Search sales",searchSales),("Profit Summary",profitSummary),("Return to previous",None)]
 def manageSalesSelection(cnx, user):
     run = True
     while run == True:
@@ -465,6 +481,4 @@ def manageSuppliersSelection(cnx, user):
             else:
                 MANAGE_SUPPLIERS_MENU[i-1][1](cnx,user) 
     return
-def profitSummary(cnx,user):
-    input("Your profit Summary")
-    return
+

@@ -57,9 +57,11 @@ def createTables(cnx):
     return
 
 # add entities
-def addCar(cnx, car, user):
+def addCar(cnx, car, supplier, user):
     SQLDeleteInsertUpdate(cnx, Statements.INSERT['Cars'], car.toTuple())
     SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateCars'], (user.getEmployee().getId(), car.getVin(), date.today(), 'Added Vehicle'))
+    SQLDeleteInsertUpdate(cnx, Statements.INSERT['CarSupply'], ( supplier.getId(),car.getVin(), date.today()))
+    
     return
 def addCustomer(cnx, customer, user):
     cust_id = SQLInsertGetId(cnx, Statements.INSERT['Customer'], customer.toTuple()[1:])
@@ -80,13 +82,12 @@ def addExpense(cnx, ex, user):
         ex.setId(ex_id)
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateExpenses'], (ex.getId(), user.getEmployee().getId()))
     return
-def addSupplier(cnx, supplier,date, user):
+def addSupplier(cnx, supplier, user):
     sup_id = SQLInsertGetId(cnx, Statements.INSERT['Suppliers'], supplier.toTuple()[1:])
     if sup_id != -1:
         supplier.setId(sup_id)
-        SQLDeleteInsertUpdate(cnx, Statements.INSERT['WorksWith'], (user.getEmployee().getId(), supplier.getId(), date))
+        SQLDeleteInsertUpdate(cnx, Statements.INSERT['WorksWith'], (user.getEmployee().getId(), supplier.getId(), date.today()))
     return
-
 # remove entites
 def removeEmployee(cnx, empid):
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (date.today(), empid))
@@ -163,7 +164,14 @@ def searchSuppliers(cnx, query):
         if len(r[i]) == 8:
             r[i] = Supplier(r[i][0], r[i][1], r[i][2], r[i][4], r[i][5], r[i][6], r[i][7], r[i][3])
     return r
-
+def searchCustomers(cnx, query):
+    # wild card search to increase number of records
+    query = '%' + query + '%'
+    r = SQLSelect(cnx, Statements.SEARCH['Customer'], (query,))
+    for i in range(len(r)):
+        if len(r[i]) == 4:
+            r[i] = Customer(r[i][0], r[i][1], r[i][2], r[i][3])
+    return r
 # generic statement handlers
 def SQLDeleteInsertUpdate(cnx, stmt, values):
     print(stmt)

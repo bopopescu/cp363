@@ -251,7 +251,7 @@ SEARCH['Cars'] = (
     "    OR `model` LIKE %s")
 SEARCH['Customer'] = (
     "SELECT * FROM `CarCompany`.`Customer`"
-    "    WHERE `ename` LIKE %s")
+    "    WHERE `cname` LIKE %s")
 SEARCH['Expenses'] = (
     "SELECT * FROM `CarCompany`.`Expenses`"
     "    WHERE `date` LIKE %s"

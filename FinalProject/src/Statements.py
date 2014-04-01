@@ -247,9 +247,9 @@ SELECT['Customer'] = (
 SEARCH = {}
 SEARCH['Cars'] = (
     "SELECT * FROM `CarCompany`.`Cars`"
-    "    WHERE `vin` LIKE %s"
+    "    WHERE (`vin` LIKE %s"
     "    OR `make` LIKE %s"
-    "    OR `model` LIKE %s")
+    "    OR `model` LIKE %s)")
 SEARCH['Customer'] = (
     "SELECT * FROM `CarCompany`.`Customer`"
     "    WHERE `cname` LIKE %s")

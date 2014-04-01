@@ -238,7 +238,7 @@ def newSale(cnx,user):
             break
     while True:
         vin = input("Vehicle Identification Number(VIN): ").upper()
-        cars = DatabaseHelper.getCar(cnx, vin)
+        cars = DatabaseHelper.getCar(cnx, vin, False)
         if len(cars) == 0:
             print("Could not find car with VIN: {}".format(vin))
         elif len(cars) == 1:

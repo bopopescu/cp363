@@ -108,8 +108,8 @@ def getAccount(cnx, u, p):
             e = Employee(c[0], c[1], c[2], c[3], c[4], c[5]==1, c[6])
             user = User(u, p, e)
     return user
-def getCar(cnx, vin):
-    r = SQLSelect(cnx, Statements.SELECT['Cars'], (vin,0))
+def getCar(cnx, vin, sold):
+    r = SQLSelect(cnx, Statements.SELECT['Cars'], (vin, 1 if sold else 0))
     for i in range(len(r)):
         if len(r[i]) == 7:
             r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
@@ -155,9 +155,10 @@ def searchSales(cnx, query):
     r = SQLSelect(cnx, Statements.SEARCH['CustomerPurchases'], (query,))
     for i in range(len(r)):
         cust = getCustomer(cnx, r[i][0])
-        car = getCar(cnx, r[i][1])
-        if len(cust) == 1 and len(car) == 1:
+        car = getCar(cnx, r[i][1], True)
+        if len(cust) > 0 and len(car) > 0:
             r[i] = Sale(cust[0], car[0])
+        print(r[i])
     return r
 def searchSuppliers(cnx, query):
     # wild card search to increase number of records
@@ -194,6 +195,8 @@ def SQLInsertGetId(cnx, stmt, values):
     cursor.close()
     return i
 def SQLSelect(cnx, stmt, values, header=False):
+    print(stmt)
+    print(values)
     cursor = cnx.cursor()
     cursor.execute(stmt, values)
     result = []
@@ -203,6 +206,7 @@ def SQLSelect(cnx, stmt, values, header=False):
         row = []
         for d in c:
             row.append(d)
+        print(row)
         result.append(row)
     cursor.close
     return result

@@ -1,7 +1,7 @@
 '''
 Created on 2014-03-25
 
-@author: mo & bryan
+@author: mo & bryan 
 '''
 from MainFunctions import *
 

@@ -278,7 +278,7 @@ def newSale(cnx,user):
         
     
     s = Sale(cid,vin)
-    DatabaseHelper.addSale(cnx, s, user)
+    #DatabaseHelper.addSale(cnx, s, user)
     try:
         clear()
         

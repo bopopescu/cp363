@@ -158,7 +158,6 @@ def searchSales(cnx, query):
         car = getCar(cnx, r[i][1], True)
         if len(cust) > 0 and len(car) > 0:
             r[i] = Sale(cust[0], car[0])
-        print(r[i])
     return r
 def searchSuppliers(cnx, query):
     # wild card search to increase number of records
@@ -178,16 +177,12 @@ def searchCustomers(cnx, query):
     return r
 # generic statement handlers
 def SQLDeleteInsertUpdate(cnx, stmt, values):
-    print(stmt)
-    print(values)
     cursor = cnx.cursor()
     cursor.execute(stmt, values)
     cnx.commit()
     cursor.close()
     return
 def SQLInsertGetId(cnx, stmt, values):
-    print(stmt)
-    print(values)
     cursor = cnx.cursor()
     cursor.execute(stmt, values)
     i = cursor.lastrowid
@@ -195,8 +190,6 @@ def SQLInsertGetId(cnx, stmt, values):
     cursor.close()
     return i
 def SQLSelect(cnx, stmt, values, header=False):
-    print(stmt)
-    print(values)
     cursor = cnx.cursor()
     cursor.execute(stmt, values)
     result = []

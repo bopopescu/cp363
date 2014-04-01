@@ -49,9 +49,9 @@ def profitSummary(cnx,user):
         print("Could not retrieve sale information.")
     
     for i in range(len(sales)):
-        totalProfit += sales[i].getCar().getPrice()
+        totalProfit = totalProfit + float(sales[i].getCar().getPrice())
         
-    print("Your total profit is: {}".format(totalProfit))
+    print("Your total profit is: ${0:.2f}".format(totalProfit))
     input("Press any button to continue.")
     return
 

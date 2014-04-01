@@ -165,7 +165,14 @@ def searchSuppliers(cnx, query):
         if len(r[i]) == 8:
             r[i] = Supplier(r[i][0], r[i][1], r[i][2], r[i][4], r[i][5], r[i][6], r[i][7], r[i][3])
     return r
-
+def searchCustomers(cnx, query):
+    # wild card search to increase number of records
+    query = '%' + query + '%'
+    r = SQLSelect(cnx, Statements.SEARCH['Customer'], (query,))
+    for i in range(len(r)):
+        if len(r[i]) == 7:
+            r[i] = Customer(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+    return r
 # generic statement handlers
 def SQLDeleteInsertUpdate(cnx, stmt, values):
     print(stmt)

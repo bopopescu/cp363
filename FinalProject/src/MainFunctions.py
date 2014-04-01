@@ -234,7 +234,7 @@ def newSale(cnx,user):
         elif exist == "N":
             break
     while True:
-        vin = input("Vehicle Identification Number(VIN):\n").upper()
+        vin = input("Vehicle Identification Number(VIN): ").upper()
         cars = DatabaseHelper.getCar(cnx, vin)
         if len(cars) == 0:
             print("Could not find car with VIN: {}".format(vin))
@@ -260,7 +260,7 @@ def newSale(cnx,user):
             if len(customers) == 0:
                 print("Could not find customer with name: {}".format(cname))
             elif len(customers) == 1:
-                cid = customers[0]
+                cid = customers[0].getId()
                 break
             else:
                 print("Found customers:")
@@ -273,13 +273,15 @@ def newSale(cnx,user):
                     if index > len(customers) -1 or index <0:
                         index = -1
                         print("Index out of bounds. Try again.")
-                cid = index
+                cid = customers[index].getId()
+                break
         
     
     s = Sale(cid,vin)
+    DatabaseHelper.addSale(cnx, s, user)
     try:
         clear()
-        #DatabaseHelper.addSale(cnx, s, user)
+        
         print("Sale successfully added.")
         input("Please press enter to continue.")
     except:

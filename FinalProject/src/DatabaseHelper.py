@@ -82,13 +82,16 @@ def addExpense(cnx, ex, user):
         ex.setId(ex_id)
         SQLDeleteInsertUpdate(cnx, Statements.INSERT['UpdateExpenses'], (ex.getId(), user.getEmployee().getId()))
     return
-def addSupplier(cnx, supplier,date, user):
+def addSupplier(cnx, supplier, user):
     sup_id = SQLInsertGetId(cnx, Statements.INSERT['Suppliers'], supplier.toTuple()[1:])
     if sup_id != -1:
         supplier.setId(sup_id)
-        SQLDeleteInsertUpdate(cnx, Statements.INSERT['WorksWith'], (user.getEmployee().getId(), supplier.getId(), date))
+        SQLDeleteInsertUpdate(cnx, Statements.INSERT['WorksWith'], (user.getEmployee().getId(), supplier.getId(), date.today()))
     return
-
+def addSale(cnx, sale, user):
+    SQLInsertGetId(cnx, Statements.INSERT['CustomerPurchases'], sale.toTuple())
+    SQLDeleteInsertUpdate(cnx, Statements.SELL_CAR,(1,sale.getVin()))
+    return
 # remove entites
 def removeEmployee(cnx, empid):
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid,))
@@ -170,8 +173,8 @@ def searchCustomers(cnx, query):
     query = '%' + query + '%'
     r = SQLSelect(cnx, Statements.SEARCH['Customer'], (query,))
     for i in range(len(r)):
-        if len(r[i]) == 7:
-            r[i] = Customer(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])
+        if len(r[i]) == 4:
+            r[i] = Customer(r[i][0], r[i][1], r[i][2], r[i][3])
     return r
 # generic statement handlers
 def SQLDeleteInsertUpdate(cnx, stmt, values):

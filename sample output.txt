@@ -1,0 +1,462 @@
+Login Screen
+---------------------------------
+
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Username: bchau
+Password:
+---------------------------------
+Manager Menu
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Welcome, bryan!
+Please choose from the following options:
+1) Manage Cars
+2) Manage Employees
+3) Manage Expenses
+4) Manage Sales
+5) Manage Suppliers
+6) Exit
+Selection(number from above):
+---------------------------------
+1) Manage Cars
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please choose from the following options:
+1) Add a new car
+2) Make a sale
+3) Search cars
+4) Return to previous
+Selection(number from above):
+---------------------------------
+1.1) Add a new car
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please enter the following details for the car
+Vehicle Identification Number(VIN):
+vin
+Make: make
+Model: model
+Year: 2000
+Colour: red
+Price: $90000
+Supplier:
+
+Found suppliers:
+Result 1
+
+        ID: 1
+        NAME: toyota
+        PHONE: 1111111111
+        ADDRESS: maple street
+        toronto, canada
+        ontario 111111
+
+
+Result 2
+
+        ID: 2
+        NAME: honda
+        PHONE: 1112223333
+        ADDRESS: street
+        Toronto, Canada
+        Ontario M6G3P6
+
+
+Result 3
+
+        ID: 3
+        NAME:
+        PHONE:
+        ADDRESS:
+        ,
+
+
+
+Result 4
+
+        ID: 4
+        NAME: new
+        PHONE: 1
+        ADDRESS: 1
+        1, 1
+        1 1
+
+
+Select supplier by result number: 1
+Car successfully added.
+Please press enter to continue.
+---------------------------------
+1.2) Make a sale
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please enter the following details for the Sale
+Create new customer?(Y/N): y
+
+Please enter the following details for the new Customer
+Customer name: bryan
+Phone number: 1111111111
+
+Please enter the following details for the Sale
+Vehicle Identification Number(VIN): vin
+
+Sale successfully added.
+Please press enter to continue.
+---------------------------------
+1.3) Search cars
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Enter a search query:vin
+
+Your Search returned 1 result(s).
+
+        VIN: VIN
+        MAKE: MAKE
+        MODEL: MODEL
+        YEAR: RED
+        COLOUR: 2000
+        SOLD: True
+        PRICE: $90000
+
+Enter 'Y' to search again. Any other key to return to previous:
+---------------------------------
+2) Manage Employees
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please choose from the following options:
+1) Add employee
+2) Remove employee
+3) Search employees
+4) Return to previous
+Selection(number from above):
+---------------------------------
+2.1) Add Employees
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please enter the following details for the Employee
+Full Name: Bryan
+Salary: 9000
+Is employee a manager?(Y/N): Y
+Manager id: 1
+Username: bryan3
+Password: bryan3
+
+Employee successfully added.
+Please press enter to continue.
+---------------------------------
+2.2) Remove Employees
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please enter the id of the employee to remove
+Employee id: 13
+
+Employee successfully removed
+Please press enter to continue.
+
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+---------------------------------
+2.3) Remove Employees
+---------------------------------
+Enter a search query:bryan
+
+        ID: 1
+        NAME: bryan
+        SALARY: $999
+        DATE OF EMPLOYMENT: March 1, 2014
+        DATE OF DEPARTURE: 2014-04-01
+        IS MANAGER: True
+
+
+        ID: 3
+        NAME: bryan
+        SALARY: $5
+        DATE OF EMPLOYMENT: 5
+        DATE OF DEPARTURE: none
+        IS MANAGER: True
+
+
+        ID: 5
+        NAME: bryan
+        SALARY: $6
+        DATE OF EMPLOYMENT: 6
+        DATE OF DEPARTURE: none
+        IS MANAGER: True
+
+
+        ID: 14
+        NAME: Bryan
+        SALARY: $9000
+        DATE OF EMPLOYMENT: 2014-04-01
+        DATE OF DEPARTURE: 2014-04-01
+        IS MANAGER: True
+
+Enter 'Y' to search again. Any other key to return to previous:
+---------------------------------
+3) Manage Expenses
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please choose from the following options:
+1) Add expense
+2) Update expense
+3) Search expenses
+4) Return to previous
+Selection(number from above):
+---------------------------------
+3.1) Add Expense
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please enter the following details for the Expense
+Cost of expense: 90
+Enter the details of the expense:
+bought chocolate
+
+Expense successfully added.
+Please press enter to continue.
+---------------------------------
+3.2) Update Expense
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please enter the id of the expense to update
+All Expenses:
+Result 1
+
+        ID: 1
+        DATE: 0
+        COST: $0
+        DETAILS:
+        blah
+
+Result 2
+
+        ID: 2
+        DATE: 31/03/2014
+        COST: $9999
+        DETAILS:
+        purchased car
+
+Result 3
+
+        ID: 3
+        DATE: 31/03/2014
+        COST: $8000
+        DETAILS:
+        test
+
+Result 4
+
+        ID: 4
+        DATE: 31/03/2014
+        COST: $9
+        DETAILS:
+        i bought coffee
+
+Result 5
+
+        ID: 5
+        DATE: 2014-04-01
+        COST: $90
+        DETAILS:
+        bought chocolate
+
+Select expense by result number: 5
+Please enter the following details for the updated Expense
+Cost of expense: 85
+Enter the details of the expense:
+ate chocolate
+
+Updated expense successfully.
+Please press enter to continue.
+---------------------------------
+3.3) Search Expenses
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Enter a search query:chocolate
+
+        ID: 5
+        DATE: 2014-04-01
+        COST: $85
+        DETAILS:
+        ate chocolate
+
+Enter 'Y' to search again. Any other key to return to previous:
+---------------------------------
+4) Manage Sales
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please choose from the following options:
+1) Make a sale
+2) Search sales
+3) Profit Summary
+4) Return to previous
+Selection(number from above):
+---------------------------------
+4.1) Make a sale: was already shown in 1.2 (Redundancy)
+---------------------------------
+---------------------------------
+4.2) Search sales
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Enter a search query:66666
+
+        CUSTOMER NAME: george
+        CAR DETAILS:
+        VIN: 66666
+        MAKE:
+        MODEL:
+        YEAR: RED
+        COLOUR: 11111
+        SOLD: True
+        PRICE: $1
+
+
+Enter 'Y' to search again. Any other key to return to previous:
+---------------------------------
+4.3) Search sales
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Your total profit is: $90587.00
+Press any button to continue.
+
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+---------------------------------
+5) Manage Suppliers
+---------------------------------
+Please choose from the following options:
+1) Add supplier
+2) Search Suppliers
+3) Return to previous
+Selection(number from above):
+---------------------------------
+5.1) Add Supplier
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Please enter the following details for the new Supplier
+Supplier name: Toyota2
+Phone number: 5554443333
+Postal code: n2ln2l
+Street: street
+City: city
+Province: prov
+Country: canada
+
+Supplier successfully created
+Please press enter to continue.
+---------------------------------
+5.2) Search Supplier
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Enter a search query:Toyota
+
+        ID: 1
+        NAME: toyota
+        PHONE: 1111111111
+        ADDRESS: maple street
+        toronto, canada
+        ontario 111111
+
+
+
+        ID: 5
+        NAME: Toyota2
+        PHONE: 5554443333
+        ADDRESS: street
+        city, canada
+        prov n2ln2l
+
+
+Enter 'Y' to search again. Any other key to return to previous:
+---------------------------------
+Regular Employee Menu
+---------------------------------
+Used Car Dealer
+Version 1.0 Created in 2014
+Bryan Chau & Mohamed Mohamedtaki
+CP363 Database I
+
+Welcome, hugo!
+Please choose from the following options:
+1) Add Cars
+2) Make a Sale
+3) Car Detail Search
+4) Exit
+Selection(number from above):
+---------------------------------
+Since all of the functions are the same, We will not need to show any of the employee functions.
+---------------------------------

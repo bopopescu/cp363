@@ -1,7 +1,7 @@
 '''
 Created on 2014-03-26
 
-@author: mo
+@author: mo & bryan
 '''
 import getpass
 import os
@@ -65,6 +65,8 @@ def newCar(cnx, user):
     while year <= 1900:
         try:
             year = int(input("Year: "))
+            if (year <= 1900):
+                print("Invalid year, please enter a valid year > 1900")
         except:
             print("Invalid year, please enter a valid year > 1900")
             year = 0
@@ -74,6 +76,8 @@ def newCar(cnx, user):
     while price <= 0:
         try:
             price = float(input("Price: $"))
+            if (price <= 0):
+                print("Invalid price, please enter a valid price > 0") 
         except:
             print("Invalid price, please enter a valid price > 0")
             price = 0
@@ -151,7 +155,7 @@ def newEmployee(cnx,user):
             
     username = input("Username: ")
     password = input("Password: ")        
-    e = Employee(0,name,salary,dateEmployed,None,isManager,mid)
+    e = Employee(0,name,salary,dateEmployed,"none",isManager,mid)
     user = User(username, password, e)
 
     try:
@@ -178,7 +182,7 @@ def removeEmployee(cnx,user):
             eid = 0
     try:
         clear()
-        DatabaseHelper.removeEmployee(cnx, eid) #needs to just set date of departure field.
+        DatabaseHelper.removeEmployee(cnx, eid)
         print("Employee successfully removed")
         input("Please press enter to continue.")
     except:
@@ -191,7 +195,7 @@ def newExpense(cnx,user):
     clear()
     print("Please enter the following details for the Expense")
     
-    date = date.today()
+    edate = date.today()
     
     cost = -1
     while cost < 0:
@@ -203,7 +207,7 @@ def newExpense(cnx,user):
             
     details = input("Enter the details of the expense: \n")
     
-    e = Expense(0,date,cost,details)
+    e = Expense(0,edate,cost,details)
 
     try:
         clear()
@@ -220,16 +224,53 @@ def updateExpense(cnx,user):
     clear()
     print("Please enter the id of the expense to update")
     
-    xid = 0
-    while xid < 1:
+    while True:
         try:
-            xid = int(input("Expense id: "))
+            print("All Expenses: ")
+            expenses = DatabaseHelper.searchExpenses(cnx, "")
+            if len(expenses) != 0:
+                for i in range(len(expenses)):
+                    print("Result {}".format(i+1))
+                    print(expenses[i])
+                index = -1
+                while index < 0:
+                    try:
+                        index = int(input("Select expense by result number: ")) - 1
+                        if index > len(expenses) -1 or index <0:
+                            index = -1
+                            print("Index out of bounds. Try again.")
+                    except:
+                        print("Incorrect input. Try again.")
+                expense = expenses[0]
+                break
+            else:
+                print("Could not find expense with id, try again.")
         except:
-            print("Invalid expense id")
-            xid = 0
+            print("Invalid expense id, try again.")
     
-    DatabaseHelper.removeExpense(cnx, xid)
+    print("Please enter the following details for the updated Expense")
+    cost = -1
+    while cost < 0:
+        try:
+            cost = int(input("Cost of expense: "))
+        except:
+            print("Invalid cost")
+            cost = -1
+            
+    details = input("Enter the details of the expense: \n")
     
+    e = Expense(expense.getId(),expense.getDate(),cost,details)
+    
+    try:
+        clear()
+        DatabaseHelper.updateExpense(cnx, e)
+        
+        print("Updated expense successfully.")
+        input("Please press enter to continue.")
+    except:
+        print("Could not update expense.")
+        input("Please press enter to continue.")
+    return
         
     return
 
@@ -300,10 +341,10 @@ def newSale(cnx,user):
         
     
     s = Sale(customer,car)
-    DatabaseHelper.addSale(cnx, s, user)
+    
     try:
         clear()
-        
+        DatabaseHelper.addSale(cnx, s, user)
         print("Sale successfully added.")
         input("Please press enter to continue.")
     except:
@@ -344,12 +385,12 @@ def newSupplier(cnx,user):
     country = input("Country: ")
     
     supplier = Supplier(0,sname,phone,street,city,province,country,postalCode)
+    
     try:
         clear()
-        DatabaseHelper.addSupplier(cnx, supplier,date.today(), user)
+        DatabaseHelper.addSupplier(cnx, supplier, user)
         print("Supplier successfully created")
         input("Please press enter to continue.")
-
     except:
         print("Could not create supplier")
         input("Please press enter to continue.")
@@ -453,7 +494,7 @@ def manageEmployeesSelection(cnx, user):
     return
 
 
-MANAGE_EXPENSES_MENU = (("Add expense",newExpense), ("Update expense",updateExpense),("Return to previous",None))
+MANAGE_EXPENSES_MENU = (("Add expense",newExpense), ("Update expense",updateExpense),("Search expenses",searchExpenses),("Return to previous",None))
 def manageExpensesSelection(cnx, user):
     run = True
     while run == True:

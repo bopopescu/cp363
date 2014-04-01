@@ -1,7 +1,7 @@
 '''
 Created on 2014-03-25
 
-@author: mo
+@author: mo & bryan
 '''
 TABLES = {}
 TABLES['Employee'] = (
@@ -223,17 +223,12 @@ INSERT['CustomerPurchases'] = (
     "INSERT INTO `CarCompany`.`CustomerPurchases` (`cid`, `vin`)"
     "    VALUES (%s, %s)")
 
+
 DELETE = {}
 DELETE['Employee'] =(
     "UPDATE `CarCompany`.`Employee`"
     "    SET `date_of_departure`=%s"
     "    WHERE `eid`=%s")
-DELETE['Expenses'] = (
-    "DELETE FROM `CarCompany`.`Expenses`"
-    "    WHERE `xid`=%s")
-DELETE['UpdateExpense'] = (
-    "DELETE FROM `CarCompany`.`UpdateExpenses`"
-    "    WHERE `xid`=%s")
 
 SELECT = {}
 SELECT['Cars'] = (
@@ -276,3 +271,8 @@ SELL_CAR = (
     "UPDATE `CarCompany`.`Cars`"
     "    SET `sold`=1"
     "    WHERE `vin`=%s")
+UPDATE_EXPENSE = (
+    "UPDATE `CarCompany`.`Expenses`"
+    "    SET `cost`=%s"
+    "    AND `details`=%s"
+    "    WHERE `xid`=%s")

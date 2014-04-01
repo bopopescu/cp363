@@ -2,7 +2,7 @@
 This class contains all entity classes related to the system
 Includes Car, Customer, Employee, Expense, Supplier classes
 
-@author: Mohamed Mohamedtaki
+@author: Mohamed Mohamedtaki & bryan
 '''
 class Car:
     def __init__(self, vin, make, model, year, colour, sold, price):

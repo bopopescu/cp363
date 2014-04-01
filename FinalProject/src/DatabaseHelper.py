@@ -1,7 +1,7 @@
 '''
 Created on 2014-03-25
 
-@author: mo
+@author: mo & bryan
 '''
 
 from mysql.connector import errorcode
@@ -95,9 +95,8 @@ def addSale(cnx, sale, user):
 def removeEmployee(cnx, empid):
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (date.today(), empid))
     return
-def removeExpense(cnx, xid):
-    SQLDeleteInsertUpdate(cnx, Statements.DELETE['UpdateExpenses'], (xid,))
-    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Expenses'], (xid,))
+def updateExpense(cnx, expense):
+    SQLDeleteInsertUpdate(cnx, Statements.UPDATE_EXPENSE, (expense.getCost(),expense.getDetails(),expense.getId()))
     return
 # get entities
 def getAccount(cnx, u, p):
@@ -199,7 +198,6 @@ def SQLSelect(cnx, stmt, values, header=False):
         row = []
         for d in c:
             row.append(d)
-        print(row)
         result.append(row)
     cursor.close
     return result

@@ -41,7 +41,18 @@ def login(cnx):
 
 # entity creators/deleters/updaters
 def profitSummary(cnx,user):
-    input("Your profit Summary")
+    clear()
+    totalProfit = 0.0
+    try:
+        sales = DatabaseHelper.searchSales(cnx, "")
+    except:
+        print("Could not retrieve sale information.")
+    
+    for i in range(len(sales)):
+        totalProfit += sales[i].getCar().getPrice()
+        
+    print("Your total profit is: {}".format(totalProfit))
+    input("Press any button to continue.")
     return
 
 def newCar(cnx, user):

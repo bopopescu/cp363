@@ -273,5 +273,5 @@ USER_LOGIN = (
 
 SELL_CAR = (
     "UPDATE `CarCompany`.`Cars`"
-    "SET `sold`=%s"
-    "WHERE `vin`=%s")
+    "    SET `sold`=1"
+    "    WHERE `vin`=%s")

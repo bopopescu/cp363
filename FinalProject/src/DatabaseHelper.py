@@ -89,7 +89,7 @@ def addSupplier(cnx, supplier, user):
     return
 def addSale(cnx, sale, user):
     SQLInsertGetId(cnx, Statements.INSERT['CustomerPurchases'], sale.toTuple())
-    SQLDeleteInsertUpdate(cnx, Statements.SELL_CAR,(1,sale.getCar().getVin()))
+    SQLDeleteInsertUpdate(cnx, Statements.SELL_CAR,(sale.getCar().getVin(),))
     return
 # remove entites
 def removeEmployee(cnx, empid):

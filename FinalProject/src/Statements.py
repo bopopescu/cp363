@@ -225,7 +225,8 @@ INSERT['CustomerPurchases'] = (
 
 DELETE = {}
 DELETE['Employee'] =(
-    "DELETE FROM `CarCompany`.`Employee`"
+    "UPDATE `CarCompany`.`Employee`"
+    "    SET `date_of_departure`=%s"
     "    WHERE `eid`=%s")
 DELETE['Expenses'] = (
     "DELETE FROM `CarCompany`.`Expenses`"

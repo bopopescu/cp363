@@ -89,7 +89,7 @@ def addSupplier(cnx, supplier,date, user):
 
 # remove entites
 def removeEmployee(cnx, empid):
-    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (empid,))
+    SQLDeleteInsertUpdate(cnx, Statements.DELETE['Employee'], (date.today(), empid))
     return
 def removeExpense(cnx, xid):
     SQLDeleteInsertUpdate(cnx, Statements.DELETE['UpdateExpenses'], (xid,))

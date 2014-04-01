@@ -240,7 +240,7 @@ SELECT['Cars'] = (
     "SELECT * FROM `CarCompany`.`Cars`"
     "    WHERE `vin`=%s"
     "    AND `sold`=%s")
-SELECT['Customers'] = (
+SELECT['Customer'] = (
     "SELECT * FROM `CarCompany`.`Customer`"
     "    WHERE `cid`=%s")
 

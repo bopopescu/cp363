@@ -109,7 +109,7 @@ def getAccount(cnx, u, p):
             user = User(u, p, e)
     return user
 def getCar(cnx, vin):
-    r = SQLSelect(cnx, Statements.SELECT['Cars'], (vin,))
+    r = SQLSelect(cnx, Statements.SELECT['Cars'], (vin,0))
     for i in range(len(r)):
         if len(r[i]) == 7:
             r[i] = Car(r[i][0], r[i][1], r[i][2], r[i][3], r[i][4], r[i][5]==1, r[i][6])

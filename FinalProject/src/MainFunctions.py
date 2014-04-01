@@ -84,10 +84,13 @@ def newCar(cnx, user):
                     print(suppliers[i])
                 index = -1
                 while index < 0:
-                    index = int(input("Select supplier by result number: ")) - 1
-                    if index > length -1 or index <0:
-                        index = -1
-                        print("Index out of bounds. Try again.")
+                    try:
+                        index = int(input("Select supplier by result number: ")) - 1
+                        if index > length -1 or index <0:
+                            index = -1
+                            print("Index out of bounds. Try again.")
+                    except:
+                        print("Incorrect input. Try again.")
                 supplier = suppliers[index]
                 break
         except:
@@ -248,10 +251,13 @@ def newSale(cnx,user):
                 print(cars[i])
             index = -1
             while index < 0:
-                index = int(input("Select car by result number: ")) - 1
-                if index > len(cars) -1 or index <0:
-                    index = -1
-                    print("Index out of bounds. Try again.")
+                try:
+                    index = int(input("Select car by result number: ")) - 1
+                    if index > len(cars) -1 or index <0:
+                        index = -1
+                        print("Index out of bounds. Try again.")
+                except:
+                    print("Incorrect input. Try again.")
             car = cars[index]
     try:
         customer = c
@@ -271,10 +277,13 @@ def newSale(cnx,user):
                     print(customers[i])
                 index = -1
                 while index < 0:
-                    index = int(input("Select customer by result number: ")) - 1
-                    if index > len(customers) -1 or index <0:
-                        index = -1
-                        print("Index out of bounds. Try again.")
+                    try:
+                        index = int(input("Select customer by result number: ")) - 1
+                        if index > len(customers) -1 or index <0:
+                            index = -1
+                            print("Index out of bounds. Try again.")
+                    except:
+                        print("Incorrect input. Try again.")
                 customer = customers[index]
                 break
         

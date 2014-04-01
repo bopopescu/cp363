@@ -238,7 +238,8 @@ DELETE['UpdateExpense'] = (
 SELECT = {}
 SELECT['Cars'] = (
     "SELECT * FROM `CarCompany`.`Cars`"
-    "    WHERE `vin`=%s")
+    "    WHERE `vin`=%s"
+    "    AND `sold`=%s")
 SELECT['Customers'] = (
     "SELECT * FROM `CarCompany`.`Customer`"
     "    WHERE `cid`=%s")

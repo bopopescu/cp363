@@ -239,6 +239,7 @@ def newSale(cnx,user):
         if len(cars) == 0:
             print("Could not find car with VIN: {}".format(vin))
         elif len(cars) == 1:
+            car = cars[0]
             break
         else:
             print("Found cars:")
@@ -251,8 +252,9 @@ def newSale(cnx,user):
                 if index > len(cars) -1 or index <0:
                     index = -1
                     print("Index out of bounds. Try again.")
+            car = cars[index]
     try:
-        cid = c.getId()
+        customer = c
     except:
         while True:
             cname = input("Customer Name: ")
@@ -260,7 +262,7 @@ def newSale(cnx,user):
             if len(customers) == 0:
                 print("Could not find customer with name: {}".format(cname))
             elif len(customers) == 1:
-                cid = customers[0].getId()
+                customer = customers[0]
                 break
             else:
                 print("Found customers:")
@@ -273,11 +275,11 @@ def newSale(cnx,user):
                     if index > len(customers) -1 or index <0:
                         index = -1
                         print("Index out of bounds. Try again.")
-                cid = customers[index].getId()
+                customer = customers[index]
                 break
         
     
-    s = Sale(cid,vin)
+    s = Sale(customer,car)
     DatabaseHelper.addSale(cnx, s, user)
     try:
         clear()

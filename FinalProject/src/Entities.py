@@ -228,18 +228,18 @@ class User:
         return (self._employee.getId(), self._username, self._password)
     
 class Sale:
-    def __init__(self, cid, vin):
-        self._cid = cid
-        self._vin = vin
-    def getCid(self):
-        return self._cid
-    def getVin(self):
-        return self._vin
+    def __init__(self, customer, car):
+        self._customer = customer
+        self._car = car
+    def getCustomer(self):
+        return self._customer
+    def getCar(self):
+        return self._car
     def __str__(self):
         result = """
-        CUSTOMER ID: {}
+        CUSTOMER NAME: {}
         CAR DETAILS: {}
-        """.format(self._cid, self._vin)
+        """.format(self._customer.getName(), self._car)
         return result
     def toTuple(self):
-        return (self._cid, self._vin)
+        return (self._customer.getId(), self._car.getVin())
